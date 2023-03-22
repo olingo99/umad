@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:umad/secondScreen.dart';
 import 'dart:convert';
+import 'package:fl_chart/fl_chart.dart';
 
 import 'secondScreen.dart';
 
@@ -40,9 +41,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>{
   User user = User("Theo", 1.0);
-
+  List<double> points = [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0];
   void onPressed(){
     user.aigreur=user.aigreur/2;
+    points[2] = 10.0;
     setState(() {
       
     });
@@ -62,7 +64,8 @@ class _MyHomePageState extends State<MyHomePage>{
             aigreurBar(user:user,),
           ]
         ,),
-        const Image(image: AssetImage('assets/images/graph.png')),
+
+        LineChartWidget(points),
       ],
     );
   }
@@ -112,6 +115,33 @@ class _aigreurBarState extends State<aigreurBar> {
             child:LinearProgressIndicator(value:widget.user.aigreur),),
           ],
       ) 
+    );
+  }
+}
+
+class LineChartWidget extends StatelessWidget {
+  final List<double> points;
+
+  const LineChartWidget(this.points, {Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 2,
+      child: LineChart(
+        LineChartData(
+            lineBarsData: [
+              LineChartBarData(
+                spots: points.map((point) => FlSpot(point, point*2)).toList(),
+                isCurved: false,
+                // dotData: FlDotData(
+                //   show: false,
+                // ),
+              ),
+            ],
+          ),
+      ),
     );
   }
 }
