@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:umad/secondScreen.dart';
 import 'dart:convert';
+
+import 'secondScreen.dart';
 
 void main() {
     runApp(const MyApp());
@@ -36,22 +39,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage>{
-  User user = User("Theo", 100);
+  User user = User("Theo", 1.0);
+
+  void onPressed(){
+    user.aigreur=user.aigreur/2;
+    setState(() {
+      
+    });
+    print(user.aigreur);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => secondScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        ElevatedButton(onPressed: onPressed, child: Text("feur")),
         Row(
             children: [
             Image.asset('assets/images/mad.png', height: 200,),
-            Column(
-              children: [
-                Text(user.name),
-                Text(user.aigreur.toString()),
-              ],
-            ),
-            LinearProgressIndicator()
+            Padding(padding: EdgeInsets.all(10),),
+            aigreurBar(user:user,),
           ]
         ,),
         const Image(image: AssetImage('assets/images/graph.png')),
@@ -64,24 +72,46 @@ class _MyHomePageState extends State<MyHomePage>{
 
 class User{
   final String name;
-  int aigreur;
+  double aigreur;
 
   User(this.name, this.aigreur);
 }
 
 
-void determinateIndicator(){
-  Timer.periodic(
-      Duration(seconds: 1),
-          (Timer timer){
-        setState(() {
-          if(value == 1) {
-            timer.cancel();
-          }
-          else {
-            value = value + 0.1;
-          }
-        });
-      }
-  );
+class aigreurBar extends StatefulWidget {
+  final User user;
+  aigreurBar({Key? key, required this.user}) : super(key: key);
+
+  @override
+  _aigreurBarState createState() => _aigreurBarState();
+}
+
+class _aigreurBarState extends State<aigreurBar> {
+  @override
+  Widget build(BuildContext context) {
+    // return RotatedBox(
+    //     quarterTurns: -1,
+    //     child: Container(
+    //       height: 20,
+    //       width: 100,
+    //       child:LinearProgressIndicator(value:widget.user.aigreur)
+    //     )
+    //   );
+    return Container(
+      height: 180,
+      width: 100,
+      child:Row(
+          children:[
+            Column(
+              children: [
+                Text(widget.user.name),
+                Container(width:30,child:Text(widget.user.aigreur.toString(),maxLines: 1,)),
+              ],),
+            RotatedBox(
+            quarterTurns: -1,
+            child:LinearProgressIndicator(value:widget.user.aigreur),),
+          ],
+      ) 
+    );
+  }
 }
