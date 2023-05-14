@@ -14,8 +14,7 @@ class User {
     String passWord;
     int mood;
     bool admin;
-    String token;
-    int maxAge;
+
 
     User({
         required this.iduser,
@@ -23,18 +22,17 @@ class User {
         required this.passWord,
         required this.mood,
         required this.admin,
-        required this.token,
-        required this.maxAge,
+
     });
 
     factory User.fromJson(Map<String, dynamic> json) => User(
+        
         iduser: json["iduser"],
         name: json["Name"],
         passWord: json["passWord"],
         mood: json["Mood"],
-        admin: json["Admin"],
-        token: json["token"],
-        maxAge: json["maxAge"],
+        admin: json["Admin"]?? false,
+
     );
 
     Map<String, dynamic> toJson() => {
@@ -43,7 +41,5 @@ class User {
         "passWord": passWord,
         "Mood": mood,
         "Admin": admin,
-        "token": token,
-        "maxAge": maxAge,
     };
 }

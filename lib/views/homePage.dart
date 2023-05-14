@@ -1,33 +1,46 @@
 import 'package:flutter/material.dart';
-
+import 'userPage.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int userId;
+  const HomePage({Key? key, required this.userId}): super(key: key);
 
   @override
-  State<HomePage> createState() =>
+  _HomePageState createState() =>
       _HomePageState();
 }
 
 class _HomePageState
     extends State<HomePage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
+  List<Widget> _widgetOptions = [];
+  _HomePageState();
+
+    @override
+    void didChangeDependencies() {
+        super.didChangeDependencies();
+
+  print(this.widget);
+  _widgetOptions = <Widget>[
+    UserPage(userId: widget.userId),
+    const Text(
       'Index 1: Business',
       style: optionStyle,
     ),
-    Text(
+    const Text(
       'Index 2: School',
       style: optionStyle,
     ),
   ];
+}
+
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  
+
+
+
+
 
   void _onItemTapped(int index) {
     setState(() {

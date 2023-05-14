@@ -78,10 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         try{
-                          // final response = userService.tryLogin(usernameController.text, passwordController.text);
+                          final response = userService.tryLogin(usernameController.text, passwordController.text);
                           // print(response);
-                          final response = userService.checkUserName("postman");
-                          response.then((value) => print(value.name));
+                          // final response2 = userService.checkUserName("postman");
+                          response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser))));
                         }
                         catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
