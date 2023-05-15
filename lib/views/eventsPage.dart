@@ -6,6 +6,9 @@ import 'package:umad/services/categoryService.dart';
 import '../widgets/EventList.dart';
 import '../models/EventTemplateModel.dart';
 import '../services/eventTemplateService.dart';
+import '../widgets/EventTemplateWidget.dart';
+import 'package:flutter/services.dart';
+import '../services/eventService.dart';
 
 class EventsPage extends StatefulWidget {
   final int userId;
@@ -20,8 +23,11 @@ class _EventsPageState extends State<EventsPage> {
   DateTime selectedDate = DateTime.now();
   final CategoryService categoryService = CategoryService();
   final EventTemplateService eventTemplateService = EventTemplateService();
-  final _formKey = GlobalKey<FormState>();
+  final EventService eventService = EventService();
+  final _formKeyCategory = GlobalKey<FormState>();
+  final _formKeyEvent = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -90,7 +96,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
               ),
               ElevatedButton(
                 // onPressed: ()=> Navigator.of(context).pushNamed('/addEvent'),
-                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection'),
+                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value) => setState((){})),
                 child: const Text('Add an event'))
             ],
           ),
@@ -129,7 +135,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
                 Expanded(
                   flex:1,
                   child: Form(
-                    key:_formKey,
+                    key:_formKeyCategory,
                     child: Row(
                       children: [
                         Expanded(
@@ -148,12 +154,12 @@ final navigatorKey = GlobalKey<NavigatorState>();
                           flex:1,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                              if (_formKeyCategory.currentState!.validate()) {
                                 // print(titleController.text);
                                 categoryService.addCategory(widget.userId, titleController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: value));
                               }
                             },
-                            child: const Text('Submit'),
+                            child: const Text('Submit new category'),
                           ),
                         ),
                       ],
@@ -187,19 +193,29 @@ final navigatorKey = GlobalKey<NavigatorState>();
                 child: ListView.builder(
                   itemCount: eventTemplates.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(eventTemplates[index].name),
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/addEvent', arguments: eventTemplates[index]);
-                      },
-                    );
+                    return EventTemplateWidget(template: eventTemplates[index]);
                   },
                 ),
               ),
-              Expanded(
+              newEventWidget(context, category),
+            ],
+          );
+        }
+        if(snapshot.hasError) {
+          print("error");
+          return newEventWidget(context, category);
+        }
+        return CircularProgressIndicator();
+      }
+      );
+  }
+
+
+  Widget newEventWidget(context, Category category){
+    return  Expanded(
                   flex:1,
                   child: Form(
-                      key:_formKey,
+                      key:_formKeyEvent,
                       child: Row(
                         children: [
                           Expanded(
@@ -215,12 +231,39 @@ final navigatorKey = GlobalKey<NavigatorState>();
                             ),
                           ),
                           Expanded(
+                            flex:4,
+                            child: TextFormField(
+                              controller: weightController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                // FilteringTextInputFormatter.digitsOnly,
+                                FilteringTextInputFormatter.allow(RegExp(r'^-?\d*')),
+                              ],
+                              validator: (value) {
+                                if(value == null || value.isEmpty) {
+                                  return "Please enter a weight";
+                                }
+                                return null;
+                              },
+                              ),
+                            ),
+                          Expanded(
                             flex:1,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
+                                if (_formKeyEvent.currentState!.validate()) {
                                   print(titleController.text);
-                                  // eventTemplateService.addEventTemplate(widget.userId, category.idcategory, titleController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: value));
+                                  final newTemplate = EventTemplate(ideventTemplate: 0, name: titleController.text, iduser: widget.userId, proposedWeight: int.parse(weightController.text), idcategory: category.idcategory);
+                                  eventTemplateService.addEventTemplate(newTemplate).then((value){
+                                    eventService.addEvent(newTemplate);
+
+                                    Navigator.popUntil(context, (route){
+                                      print("route");
+                                      print(route.settings.name);
+                                      print(route.toString());
+                                      return route.settings.name.toString()=='/';
+                                    });
+                                  });
                                 }
                               },
                               child: const Text('Submit'),
@@ -229,20 +272,14 @@ final navigatorKey = GlobalKey<NavigatorState>();
                         ],
                       )
                   )
-              )
-            ],
-          );
-        }
-        if(snapshot.hasError) {
-          print("error");
-          return Text("${snapshot.error}");
-        }
-        return CircularProgressIndicator();
-      }
-      );
+              );
   }
 
+
 }
+
+
+
 
 
 

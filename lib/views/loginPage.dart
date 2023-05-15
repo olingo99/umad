@@ -26,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    usernameController.text = "postman";
+    passwordController.text = "123456";
     return Scaffold(
       appBar: AppBar(
         title: const Text('Umad?'),

@@ -41,7 +41,7 @@ class EventService {
       'Date': now.toIso8601String(),
     };
 
-    final response = await http.post(Uri.parse('$baseUrl/user/${event.iduser}/events'), body: requestBody);
+    final response = await httpServiceWrapper.post('/user/${event.iduser}/events', requestBody);
 
     if (response.statusCode == 200) {
       return Event.fromJson(jsonDecode(response.body));

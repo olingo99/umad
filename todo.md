@@ -1,0 +1,2 @@
+- update le progress bar
+- update list des event par jour dans le tab event apres add new event
