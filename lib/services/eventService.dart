@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:umad/httpServiceWrapper.dart';
 import '../models/EventModel.dart';
 import '../constanst.dart';
 import '../models/EventTemplateModel.dart';
 
 class EventService {
   final String baseUrl = Constants.API_URL;
+  HttpServiceWrapper httpServiceWrapper = HttpServiceWrapper();
 
   Future<List<Event>> getTodayEventsByUserId(int iduser) async {
     final response = await http.get(Uri.parse('$baseUrl/user/$iduser/events'));
@@ -49,13 +51,26 @@ class EventService {
   }
 
   Future<List<Event>> getEventsByDate(int iduser, DateTime date) async {
-    final formattedDate = date.toString().replaceAll('-', '');
-    final response = await http.get(Uri.parse('$baseUrl/user/$iduser/events/$formattedDate'));
+    print(date.toString());
+    // date = date.toString();
+    final formattedDate = date.toString().split(' ')[0].replaceAll('-', '');
+    print(formattedDate);
+    final response = await httpServiceWrapper.get('/user/$iduser/events/$formattedDate');
 
     if (response.statusCode == 200) {
+      print("ok reques");
+      print(response.body);
       final List<dynamic> jsonData = jsonDecode(response.body);
-      return jsonData.map((eventJson) => Event.fromJson(eventJson)).toList();
+      print('jsondata');
+      print(jsonData);
+      return jsonData.map((eventJson){
+        print('eventJson');
+        print(eventJson);
+        print(eventJson['Date'].runtimeType);
+        return Event.fromJson(eventJson);
+        }).toList();
     } else {
+      print("error reques");
       throw Exception('Failed to get events by date');
     }
   }

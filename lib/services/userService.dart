@@ -23,9 +23,11 @@ Future<User> tryLogin(String name, String password) async {
     if (response.statusCode == 200) {
       print(response.body);
       storage.read(key: 'token').then((value) => print(value??''));
-      storage.write(key: 'token', value: jsonDecode(response.body)['token']);
-      storage.read(key: 'token').then((value) => print(value??''));
+      return storage.write(key: 'token', value: jsonDecode(response.body)['token']).then((value){
       return User.fromJson(jsonDecode(response.body));
+
+      });
+      // storage.read(key: 'token').then((value) => print(value??''));
     } else {
       throw Exception('Failed to login');
     }

@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../constanst.dart';
 import '../models/CategoryModel.dart';
+import '../httpServiceWrapper.dart';
 
 class CategoryService {
   final String baseUrl = Constants.API_URL;
-
+  final HttpServiceWrapper httpServiceWrapper = HttpServiceWrapper();
   Future<Category> getCategoryById(int userId, int catId) async {
-    final response = await http.get(Uri.parse('$baseUrl/user/$userId/category/$catId'));
+    final response = await httpServiceWrapper.get('/user/$userId/category/$catId');
 
     if (response.statusCode == 200) {
       return Category.fromJson(jsonDecode(response.body));
