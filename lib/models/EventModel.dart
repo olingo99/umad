@@ -29,17 +29,18 @@ class Event {
         idevent: json["idevent"],
         name: json["Name"],
         iduser: json["iduser"],
-        weight: json["weight"],
-        date: DateTime.parse(json["date"]),
+        weight: json["Weight"],
+        date: DateTime.parse(json["Date"]),
         idcategory: json["idcategory"],
     );
+
 
     Map<String, dynamic> toJson() => {
         "idevent": idevent,
         "Name": name,
         "iduser": iduser,
-        "weight": weight,
-        "date": date.toIso8601String(),
+        "Weight": weight,
+        "Date": date.toIso8601String(),
         "idcategory": idcategory,
     };
 }
