@@ -27,7 +27,7 @@ class EventTemplate {
         ideventTemplate: json["ideventTemplate"],
         name: json["Name"],
         iduser: json["iduser"],
-        proposedWeight: json["proposedWeight"],
+        proposedWeight: json["ProposedWeight"],
         idcategory: json["idcategory"],
     );
 

@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:umad/models/CategoryModel.dart';
 import 'package:umad/services/categoryService.dart';
 import '../widgets/EventList.dart';
+import '../models/EventTemplateModel.dart';
+import '../services/eventTemplateService.dart';
 
 class EventsPage extends StatefulWidget {
   final int userId;
@@ -17,6 +19,7 @@ class _EventsPageState extends State<EventsPage> {
 
   DateTime selectedDate = DateTime.now();
   final CategoryService categoryService = CategoryService();
+  final EventTemplateService eventTemplateService = EventTemplateService();
   final _formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
 
@@ -55,7 +58,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
               builder = (BuildContext context) => CategorySelection(context);
               break;
             case '/addEvent':
-              builder = (BuildContext context) => Text("feur");
+              builder = (BuildContext context) => AddEventPage(context, settings.arguments as Category);
               break;
             default:
               throw Exception('Invalid route: ${settings.name}');
@@ -104,6 +107,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
     return FutureBuilder<List<Category>>(
       future :categoryService.getCategoriesByUserId(widget.userId),
       builder: (context, snapshot){
+
         if(snapshot.hasData) {
           List<Category> categories = snapshot.data ?? [];
           return Column(
@@ -166,6 +170,76 @@ final navigatorKey = GlobalKey<NavigatorState>();
         return CircularProgressIndicator();
       }
     );
+  }
+
+  Widget AddEventPage(context, Category category){
+    return FutureBuilder(
+      future: eventTemplateService.getEventTemplatesByCategoryId(widget.userId, category.idcategory),
+      builder: (context, snapshot){
+        print("arguments");
+        print(category.idcategory);
+        if(snapshot.hasData) {
+          List<EventTemplate> eventTemplates = snapshot.data ?? [];
+          return Column(
+            children: [
+              Expanded(
+                flex: 3,
+                child: ListView.builder(
+                  itemCount: eventTemplates.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(eventTemplates[index].name),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/addEvent', arguments: eventTemplates[index]);
+                      },
+                    );
+                  },
+                ),
+              ),
+              Expanded(
+                  flex:1,
+                  child: Form(
+                      key:_formKey,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex:4,
+                            child: TextFormField(
+                              controller: titleController,
+                              validator: (value){
+                                if(value == null || value.isEmpty){
+                                  return 'Please enter a category name';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            flex:1,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  print(titleController.text);
+                                  // eventTemplateService.addEventTemplate(widget.userId, category.idcategory, titleController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: value));
+                                }
+                              },
+                              child: const Text('Submit'),
+                            ),
+                          ),
+                        ],
+                      )
+                  )
+              )
+            ],
+          );
+        }
+        if(snapshot.hasError) {
+          print("error");
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      }
+      );
   }
 
 }

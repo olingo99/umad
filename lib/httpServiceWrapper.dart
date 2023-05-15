@@ -55,6 +55,20 @@ class HttpServiceWrapper {
   });
   }
 
+  Future<http.Response> put(String path, Map<String, dynamic> body){
+    final url = Uri.parse('$baseUrl$path');
+    Map<String, String>headers = {};
+    print(headers);
+    return storage.read(key: 'token').then((value)async {
+      headers['Authorization'] = value??'';
+      headers.addAll(contentTypeHeader);
+      print("hhhhhhhhhhhhere");
+      print(value??'');
+      print(headers);
+      return await http.put(url, headers: headers, body: jsonEncode(body));
+  });
+  }
+
   // Future<http.Response> post(String path, Map<String,dynamic> body) async{
   //   final url = Uri.parse('$baseUrl$path');
   //   Map<String, String>headers = {};
