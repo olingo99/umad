@@ -33,10 +33,10 @@ class _EventsPageState extends State<EventsPage> {
     }
   }
 
-  void addEvent(){
-    Navigator.of(context).pushNamed('/addEvent');
-    print("add event");
-  }
+  // void addEvent(){
+  //   Navigator.of(context).pushNamed('/categorySelection');
+  //   print("add event");
+  // }
 final navigatorKey = GlobalKey<NavigatorState>();
 @override
   Widget build(BuildContext context) {
@@ -51,8 +51,11 @@ final navigatorKey = GlobalKey<NavigatorState>();
             case '/':
               builder = (BuildContext context) => EventWidget(context);
               break;
-            case '/addEvent':
+            case '/categorySelection':
               builder = (BuildContext context) => CategorySelection(context);
+              break;
+            case '/addEvent':
+              builder = (BuildContext context) => Text("feur");
               break;
             default:
               throw Exception('Invalid route: ${settings.name}');
@@ -84,7 +87,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
               ),
               ElevatedButton(
                 // onPressed: ()=> Navigator.of(context).pushNamed('/addEvent'),
-                onPressed: () => navigatorKey.currentState!.pushNamed('/addEvent'),
+                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection'),
                 child: const Text('Add an event'))
             ],
           ),
@@ -143,7 +146,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 // print(titleController.text);
-                                categoryService.addCategory(widget.userId, titleController.text);//.then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: value));
+                                categoryService.addCategory(widget.userId, titleController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: value));
                               }
                             },
                             child: const Text('Submit'),
