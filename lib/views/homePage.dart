@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'userPage.dart';
 import 'eventsPage.dart';
+import 'friendsPage.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;
@@ -25,14 +26,7 @@ class _HomePageState
   _widgetOptions = <Widget>[
     UserPage(userId: widget.userId),
     EventsPage(userId: widget.userId),
-    const Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    const Text(
-      'Index 3: School',
-      style: optionStyle,
-    ),
+    FriendsPage(userId: widget.userId),
   ];
 }
 
@@ -77,12 +71,8 @@ class _HomePageState
             label: 'Business',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'User',
+            label: 'School',
           ),
         ],
         currentIndex: _selectedIndex,

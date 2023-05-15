@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:umad/httpServiceWrapper.dart';
 import '../constanst.dart';
 import '../models/UserModel.dart';
 import '../models/FriendsModel.dart';
 
 class FriendsService {
   final String baseUrl = Constants.API_URL;
-
+  final HttpServiceWrapper httpServiceWrapper = HttpServiceWrapper();
   Future<List<User>> getFriends(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/user/$id/friends'));
+    final response = await httpServiceWrapper.get('/user/$id/friends');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = jsonDecode(response.body);
