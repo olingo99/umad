@@ -36,8 +36,19 @@ class _UserImageState extends State<UserImage> {
               LinearBarPointer(
                 value: widget.userMood.toDouble(),
                 thickness: 20,
-                color: widget.userMood > 0 ? Colors.green : Colors.red,
-              )
+                shaderCallback: (bounds) => LinearGradient(
+
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                           Colors.redAccent,
+                          Colors.yellowAccent,
+                         
+                          Color(0xff00FF94),
+                        ]).createShader(bounds),
+                  )
+                
+                // color: widget.userMood > 0 ? Colors.green : Colors.red
             ],
           )
 
