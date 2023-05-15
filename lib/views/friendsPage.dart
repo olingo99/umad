@@ -20,26 +20,60 @@ class _FriendsPageState extends State<FriendsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future : friendsService.getFriends(widget.userId),
-      builder: (context, snapshot){
-        if(snapshot.hasData) {
-          List<User> friends = snapshot.data ?? [];
-          print("friends");
-          print(snapshot.data);
-          return ListView.builder(
-            itemCount: friends.length,
-            itemBuilder: (context, index) {
-              return UserViewer(friend: friends[index]);
-            },
-          );
-        }
-        if(snapshot.hasError) {
-          print("error");
-          return Text("${snapshot.error}");
-        }
-        return CircularProgressIndicator();
-      }
-      );
+    return Column(
+      
+      children: [
+        Expanded(
+          flex: 6,
+          child: FutureBuilder(
+            future : friendsService.getFriends(widget.userId),
+            builder: (context, snapshot){
+              if(snapshot.hasData) {
+                List<User> friends = snapshot.data ?? [];
+                print("friends");
+                print(snapshot.data);
+                return ListView.builder(
+                  itemCount: friends.length,
+                  itemBuilder: (context, index) {
+                    return UserViewer(friend: friends[index], userId: widget.userId, request: false,);
+                  },
+                );
+              }
+              if(snapshot.hasError) {
+                print("error");
+                return Text("${snapshot.error}");
+              }
+              // return CircularProgressIndicator();
+              return Text("Loading");
+            }
+            ),
+        ),
+        Expanded(
+          flex: 1,
+          child: FutureBuilder(
+            future : friendsService.getFriendRequests(widget.userId),
+            builder: (context, snapshot){
+              if(snapshot.hasData) {
+                List<User> friends = snapshot.data ?? [];
+                print("friends");
+                print(snapshot.data);
+                return ListView.builder(
+                  itemCount: friends.length,
+                  itemBuilder: (context, index) {
+                    return UserViewer(friend: friends[index],userId: widget.userId, request: true,);
+                  },
+                );
+              }
+              if(snapshot.hasError) {
+                print("error");
+                return Text("${snapshot.error}");
+              }
+              // return CircularProgressIndicator();
+              return Text("Loading");
+            }
+            ),
+        )
+      ],
+    );
   }
 }

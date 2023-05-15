@@ -20,9 +20,9 @@ class FriendsService {
   }
 
   Future<FriendsMap> addFriend(int idUser, String name) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/user/$idUser/friends'),
-      body: {'username': name},
+    final response = await httpServiceWrapper.post(
+      '/user/$idUser/friends',
+      {'username': name},
     );
 
     if (response.statusCode == 200) {
@@ -33,9 +33,9 @@ class FriendsService {
   }
 
   Future<User> acceptFriendRequest(int idUser, int idFriend) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/user/$idUser/acceptFriend'),
-      body: {'idfriend': idFriend.toString()},
+    final response = await httpServiceWrapper.post(
+      '/user/$idUser/acceptFriend',
+      {'idfriend': idFriend.toString()},
     );
 
     if (response.statusCode == 200) {
@@ -46,9 +46,9 @@ class FriendsService {
   }
 
   Future<User> declineFriendRequest(int idUser, int idFriend) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/user/$idUser/declineFriend'),
-      body: {'idfriend': idFriend.toString()},
+    final response = await httpServiceWrapper.post(
+      '/user/$idUser/declineFriend',
+      {'idfriend': idFriend.toString()},
     );
 
     if (response.statusCode == 200) {
@@ -59,7 +59,7 @@ class FriendsService {
   }
 
   Future<List<User>> getFriendRequests(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/user/$id/friendRequests'));
+    final response = await httpServiceWrapper.get('/user/$id/friendRequests');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = jsonDecode(response.body);

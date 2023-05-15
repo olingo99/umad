@@ -48,9 +48,9 @@ Future<User> tryLogin(String name, String password) async {
   }
 
   Future<User> addUser(String name, String password) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/user'),
-      body: {'Name': name, 'passWord': password},
+    final response = await httpServiceWrapper.post(
+      '/user',
+      {'Name': name, 'passWord': password},
     );
 
     if (response.statusCode == 200) {
@@ -61,7 +61,7 @@ Future<User> tryLogin(String name, String password) async {
   }
 
   Future<int> getMood(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/user/$id/mood'));
+    final response = await httpServiceWrapper.get('/user/$id/mood');
 
     if (response.statusCode == 200) {
       return int.parse(response.body);

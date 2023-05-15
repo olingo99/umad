@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import '../models/UserModel.dart';
 import '../services/userService.dart';
-import '../widgets/useImage.dart';
+import '../widgets/userImage.dart';
 import '../widgets/EventList.dart';
 
 

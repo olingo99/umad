@@ -8,7 +8,8 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class UserImage extends StatefulWidget {
     final int userMood;
-    const UserImage({ Key? key,  required this.userMood }) : super(key: key);
+    bool vertical;
+    UserImage({ Key? key,  required this.userMood, this.vertical = false }) : super(key: key);
   
     @override
     _UserImageState createState() => _UserImageState();
@@ -31,12 +32,12 @@ class _UserImageState extends State<UserImage> {
             minimum: -100.0,
             maximum: 100.0,
             interval: 50,
-            orientation: LinearGaugeOrientation.vertical,
+            orientation: widget.vertical ? LinearGaugeOrientation.horizontal:LinearGaugeOrientation.vertical,
             barPointers: [
               LinearBarPointer(
                 value: widget.userMood.toDouble(),
                 thickness: 20,
-                shaderCallback: (bounds) => LinearGradient(
+                shaderCallback: (bounds) => const LinearGradient(
 
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
@@ -63,7 +64,6 @@ class _UserImageState extends State<UserImage> {
       return "assets/images/happy.png";
     }
     return 'assets/images/sad${(-mood/14).ceil()}.png';
-    //qsdqsd
   }
 }
 

@@ -10,7 +10,7 @@ class EventService {
   HttpServiceWrapper httpServiceWrapper = HttpServiceWrapper();
 
   Future<List<Event>> getTodayEventsByUserId(int iduser) async {
-    final response = await http.get(Uri.parse('$baseUrl/user/$iduser/events'));
+    final response = await httpServiceWrapper.get('l/user/$iduser/events');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = jsonDecode(response.body);
@@ -21,7 +21,7 @@ class EventService {
   }
 
   Future<List<Event>> getLastEventsByUserId(int iduser) async {
-    final response = await http.get(Uri.parse('$baseUrl/user/$iduser/lastevent'));
+    final response = await httpServiceWrapper.get('/user/$iduser/lastevent');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = jsonDecode(response.body);
