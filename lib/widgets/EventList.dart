@@ -5,17 +5,22 @@ import '../models/EventModel.dart';
 import '../services/eventService.dart';
 import 'EventViewer.dart';
 
-class EventList extends StatelessWidget {
+class EventList extends StatefulWidget {
   EventList({super.key, required this.userId, required this.date});
   final int userId;
   final DateTime date;
-  final EventService eventService = EventService();
 
+  @override
+  State<EventList> createState() => _EventListState();
+}
+
+class _EventListState extends State<EventList> {
+  final EventService eventService = EventService();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Event>>(
-      future: eventService.getEventsByDate(userId,date),
+      future: eventService.getEventsByDate(widget.userId,widget.date),
       builder: (context, snapshot){
         if(snapshot.hasData) {
           List<Event> events = snapshot.data ?? [];
