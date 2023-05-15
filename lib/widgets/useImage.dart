@@ -14,6 +14,39 @@ class UserImage extends StatefulWidget {
 }
 
 class _UserImageState extends State<UserImage> {
+  OverlayEntry? _overlayEntry;
+
+  void createOverlay(){
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+
+    assert(_overlayEntry == null);
+    _overlayEntry = OverlayEntry(builder: OverlayBuilder);
+    Overlay.of(context, debugRequiredFor: widget).insert(_overlayEntry!);
+  }
+
+  Widget OverlayBuilder(BuildContext context) {
+    return Text("Hello", style: TextStyle(color: Colors.white, fontSize: 100),);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // createOverlay();
+  }
+
+  @override
+  void setState(fn) {
+    super.setState(fn);
+    createOverlay();
+  }
+
+  @override
+  void dispose() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+    super.dispose();
+  }
 
     @override
     Widget build(BuildContext context) {
@@ -64,8 +97,6 @@ class _UserImageState extends State<UserImage> {
 
                 ],
               ),
-                        Stack(
-            children: [
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 width: 20,
@@ -79,18 +110,6 @@ class _UserImageState extends State<UserImage> {
                   ),
                 ),
               ),
-              Positioned(
-                // top: MediaQuery.of(context).size.height *(widget.userMood.toDouble()+100)/200,
-                top: 200,
-
-                child: Container(
-                  width: 20,
-                  height: 2,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          )
             ],
           ),
 
@@ -107,6 +126,20 @@ class _UserImageState extends State<UserImage> {
     return 'assets/images/sad${(-mood/14).ceil()}.png';
   }
 }
+
+
+
+
+              // Positioned(
+              //   // top: MediaQuery.of(context).size.height *(widget.userMood.toDouble()+100)/200,
+              //   top: 200,
+
+              //   child: Container(
+              //     width: 20,
+              //     height: 2,
+              //     color: Colors.black,
+              //   ),
+              // ),
 
 
 
