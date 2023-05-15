@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'userPage.dart';
+import 'eventsPage.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;
@@ -23,12 +24,13 @@ class _HomePageState
   print(this.widget);
   _widgetOptions = <Widget>[
     UserPage(userId: widget.userId),
+    EventsPage(userId: widget.userId),
     const Text(
-      'Index 1: Business',
+      'Index 2: School',
       style: optionStyle,
     ),
     const Text(
-      'Index 2: School',
+      'Index 3: School',
       style: optionStyle,
     ),
   ];
@@ -51,6 +53,16 @@ class _HomePageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: widget.userId == 0 ? const Text('Home') : const Text('User'),
+        centerTitle: true,
+        leading: widget.userId == 0 ? null : IconButton(
+          icon: const Icon(Icons.home),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        )
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -61,12 +73,16 @@ class _HomePageState
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.event),
             label: 'Business',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'School',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'User',
           ),
         ],
         currentIndex: _selectedIndex,
