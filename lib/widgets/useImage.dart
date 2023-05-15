@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import '../models/UserModel.dart';
 import '../services/userService.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 
 class UserImage extends StatefulWidget {
@@ -25,74 +26,20 @@ class _UserImageState extends State<UserImage> {
             getSourceImage(widget.userMood),
 
           ),
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child:  Text(
-                      "-100",
-                      style: TextStyle(fontSize: 10),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  // SizedBox(width: MediaQuery.of(context).size.height*0.5,),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "0",
-                        style: TextStyle(fontSize: 10),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  // SizedBox(width: MediaQuery.of(context).size.height*0.5,),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Text(
-                        "100",
-                        style: TextStyle(fontSize: 10),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-
-                ],
-              ),
-                        Stack(
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                width: 20,
-                height: 500,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.red, Colors.yellow, Colors.green],
-                    stops: [0, 0.5, 1],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-              ),
-              Positioned(
-                // top: MediaQuery.of(context).size.height *(widget.userMood.toDouble()+100)/200,
-                top: 200,
-
-                child: Container(
-                  width: 20,
-                  height: 2,
-                  color: Colors.black,
-                ),
-              ),
+          //make a linear gauge ranging from -100 to 100 with 0 in the middle and the current mood as the value and the color of the gauge should be green if the mood is above 0 and red if the mood is below 0
+          SfLinearGauge(
+            minimum: -100.0,
+            maximum: 100.0,
+            interval: 50,
+            orientation: LinearGaugeOrientation.vertical,
+            barPointers: [
+              LinearBarPointer(
+                value: widget.userMood.toDouble(),
+                thickness: 20,
+                color: widget.userMood > 0 ? Colors.green : Colors.red,
+              )
             ],
           )
-            ],
-          ),
 
         ]);
     }
