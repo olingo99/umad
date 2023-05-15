@@ -18,7 +18,7 @@ class CategoryService {
   }
 
   Future<List<Category>> getCategoriesByUserId(int userId) async {
-    final response = await http.get(Uri.parse('$baseUrl/user/$userId/category'));
+    final response = await httpServiceWrapper.get('/user/$userId/category');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = jsonDecode(response.body);
@@ -28,15 +28,17 @@ class CategoryService {
     }
   }
 
-  Future<Category> addCategory(Category category) async {
+  Future<Category> addCategory(int iduser, String name) async {
     final requestBody = {
-      'iduser': category.iduser,
-      'Name': category.name,
+      'iduser': iduser,
+      'Name': name,
     };
 
-    final response = await http.post(Uri.parse('$baseUrl/user/${category.iduser}/category'), body: requestBody);
+    final response = await httpServiceWrapper.post('/user/$iduser/category', requestBody);
 
     if (response.statusCode == 200) {
+      print("category decpde");
+      print(response.body);
       return Category.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to add category');
