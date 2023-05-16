@@ -21,6 +21,10 @@ class UserViewer extends StatelessWidget {
 
   final FriendsService friendsService = FriendsService();
 
+  void refresh(){
+    notifyParent();
+  }
+
   @override
   Widget build(BuildContext context) {
     childrenWidget = [
@@ -109,7 +113,7 @@ class UserViewer extends StatelessWidget {
         if (snapshot.hasData) {
           return Expanded(flex:2,child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: EventViewer(event: snapshot.data![0]),
+            child: EventViewer(event: snapshot.data![0], notifyParent: refresh,),
           ));
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");

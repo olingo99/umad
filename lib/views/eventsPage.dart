@@ -103,7 +103,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
         ),
         Expanded(
           flex: 4,
-          child: EventList(date: selectedDate, userId: widget.userId),
+          child: EventList(date: selectedDate, userId: widget.userId,),
         ),
       ],
     );

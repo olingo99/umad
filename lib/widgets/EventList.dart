@@ -9,6 +9,7 @@ class EventList extends StatefulWidget {
   EventList({super.key, required this.userId, required this.date});
   final int userId;
   final DateTime date;
+  // final Function() notifyParent;
 
   @override
   State<EventList> createState() => _EventListState();
@@ -16,6 +17,11 @@ class EventList extends StatefulWidget {
 
 class _EventListState extends State<EventList> {
   final EventService eventService = EventService();
+
+  void refresh(){
+    // widget.notifyParent();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class _EventListState extends State<EventList> {
           return ListView.builder(
             itemCount: events.length,
             itemBuilder: (context, index) {
-              return EventViewer(event: events[index]);
+              return EventViewer(event: events[index], notifyParent: refresh,);
             },
           );
         }

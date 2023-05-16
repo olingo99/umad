@@ -68,11 +68,11 @@ class _HomePageState
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.event),
-            label: 'Business',
+            label: 'Events',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'School',
+            label: 'Friends',
           ),
         ],
         currentIndex: _selectedIndex,

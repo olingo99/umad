@@ -74,4 +74,10 @@ class EventService {
       throw Exception('Failed to get events by date');
     }
   }
+
+  Future<bool> deleteEvent(Event event) async {
+    final response = await httpServiceWrapper.delete('/user/${event.iduser}/event/${event.idevent}');
+
+    return response.statusCode == 200;
+  }
 }

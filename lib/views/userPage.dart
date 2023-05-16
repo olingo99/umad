@@ -21,6 +21,10 @@ class _UserPageState extends State<UserPage> {
     final UserService userService = UserService();
     _UserPageState();
 
+    void refresh(){
+        setState(() {});
+    }
+
     @override
     void didChangeDependencies() {
         super.didChangeDependencies();
