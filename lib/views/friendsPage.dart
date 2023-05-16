@@ -6,6 +6,7 @@ import '../services/userService.dart';
 import '../models/FriendsModel.dart';
 import '../services/friendService.dart';
 import '../widgets/UserViewer.dart';
+import '../widgets/EventWidgetClass.dart';
 
 class FriendsPage extends StatefulWidget {
   const FriendsPage({super.key, required this.userId});
@@ -24,36 +25,39 @@ class _FriendsPageState extends State<FriendsPage> {
     setState(() {});
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
-    // return WillPopScope(
-    //   onWillPop: () async => !await navigatorKey.currentState!.maybePop(),
-    //   child: Navigator(
-    //     key: navigatorKey,
-    //     initialRoute: '/',
-    //     onGenerateRoute: (RouteSettings settings) {
-    //       WidgetBuilder builder;
-    //       switch (settings.name) {
-    //         case '/':
-    //           builder = (BuildContext context) => mainFriendPage(context);
-    //           break;
-    //         case '/categorySelection':
-    //           builder = (BuildContext context) => CategorySelection(context);
-    //           break;
-    //         case '/addEvent':
-    //           builder = (BuildContext context) => AddEventPage(context, settings.arguments as Category);
-    //           break;
-    //         case '/eventPage':
-    //           builder = (BuildContext context) => EventPage(context, settings.arguments as Event);
-    //           break;
-    //         default:
-    //           throw Exception('Invalid route: ${settings.name}');
-    //       }
-    //       return MaterialPageRoute(builder: builder, settings: settings);
-    //     },
-    //   ),
-    // );
+    final widgetBuilder = EventWidgets(context : context,args: {"refresh": refresh,  "navigatorKey": navigatorKey});
+
+    return WillPopScope(
+      onWillPop: () async => !await navigatorKey.currentState!.maybePop(),
+      child: Navigator(
+        key: navigatorKey,
+        initialRoute: '/',
+        onGenerateRoute: (RouteSettings settings) {
+          WidgetBuilder builder;
+          switch (settings.name) {
+            case '/':
+              builder = (BuildContext context) => mainFriendPage(context);
+              break;
+            case '/seeEvents':
+              builder = (BuildContext context) => widgetBuilder.EventWidget(settings.arguments as int);
+              break;
+            case '/categorySelection':
+              builder = (BuildContext context) => widgetBuilder.CategorySelection(settings.arguments as int);
+              break;
+            case '/addEvent':
+              builder = (BuildContext context) => widgetBuilder.AddEventPage(settings.arguments as Map<String, dynamic>);
+              break;
+            default:
+              throw Exception('Invalid route: ${settings.name}');
+          }
+          return MaterialPageRoute(builder: builder, settings: settings);
+        },
+      ),
+    );
   }
 
   Widget addFriendForm(){

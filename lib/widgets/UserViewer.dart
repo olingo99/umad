@@ -81,12 +81,12 @@ class UserViewer extends StatelessWidget {
       childrenWidget.add(futureEventViewer(friend));
       childrenWidget.add(Expanded(child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(onPressed: (){}, child: Text("See Events")),
+                          child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/seeEvents', arguments: friend.iduser);}, child: Text("See Events")),
                           ))
                         );
       childrenWidget.add(Expanded(child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(onPressed: (){}, child: Text("Add an event")),
+                          child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/categorySelection', arguments: friend.iduser);}, child: Text("Add an event")),
                           ))
                         );
     }

@@ -17,7 +17,7 @@ class EventWidgets{
     // selectedDate = args['selectedDate'];
     // _selectDate = args['_selectDate'];
     navigatorKey = args['navigatorKey'];
-    userId = args['userId'];
+    // userId = args['userId'];
     refresh = args['refresh'];
     // _formKeyCategory = args['_formKeyCategory'];
     // titleController = args['titleController'];
@@ -32,7 +32,7 @@ class EventWidgets{
   DateTime selectedDate = DateTime.now();
   // Function _selectDate = (){};
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  int userId = 0;
+  // int userId = 0;
   Function refresh = (){};
   GlobalKey<FormState> _formKeyCategory = GlobalKey<FormState>();
   GlobalKey<FormState> _formKeyEvent = GlobalKey<FormState>();
@@ -55,7 +55,7 @@ class EventWidgets{
     }
   }
 
-  Widget CategorySelection() {
+  Widget CategorySelection(int userId) {
     print("CategorySelection");
     return FutureBuilder<List<Category>>(
       future :categoryService.getCategoriesByUserId(userId),
@@ -73,7 +73,7 @@ class EventWidgets{
                     return ListTile(
                       title: Text(categories[index].name),
                       onTap: () {
-                        Navigator.of(context).pushNamed('/addEvent', arguments: categories[index]);
+                        Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':categories[index]});
                       },
                     );
                   },
@@ -103,7 +103,7 @@ class EventWidgets{
                             onPressed: () {
                               if (_formKeyCategory.currentState!.validate()) {
                                 // print(titleController.text);
-                                categoryService.addCategory(userId, titleController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: value));
+                                categoryService.addCategory(userId, titleController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':value}));
                               }
                             },
                             child: const Text('Submit new category'),
@@ -125,7 +125,7 @@ class EventWidgets{
     );
   }
 
-    Widget EventWidget(){
+    Widget EventWidget(int userId){
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -146,7 +146,7 @@ class EventWidgets{
               ElevatedButton(
                 // onPressed: ()=> Navigator.of(context).pushNamed('/addEvent'),
                 // onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value) => setState((){})),
-                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value){
+                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection', arguments: userId).then((value){
                   print("value update on pop");
                   // setState((){});
                   refresh();
@@ -167,7 +167,10 @@ class EventWidgets{
     );
   }
 
-    Widget AddEventPage(Category category){
+    // Widget AddEventPage(int userId, Category category){
+    Widget AddEventPage(Map<String, dynamic> args){
+    Category category = args['category'];
+    int userId = args['userId'];
     return FutureBuilder(
       future: eventTemplateService.getEventTemplatesByCategoryId(userId, category.idcategory),
       builder: (context, snapshot){
@@ -186,20 +189,20 @@ class EventWidgets{
                   },
                 ),
               ),
-              newEventWidget(context, category),
+              newEventWidget(context,userId, category),
             ],
           );
         }
         if(snapshot.hasError) {
           print("error");
-          return newEventWidget(context, category);
+          return newEventWidget(context,userId, category);
         }
         return CircularProgressIndicator();
       }
       );
   }
 
-  Widget newEventWidget(context, Category category){
+  Widget newEventWidget(context,int userId, Category category){
     return  Expanded(
                   flex:1,
                   child: Form(

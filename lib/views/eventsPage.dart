@@ -60,7 +60,7 @@ void refresh(){
   Widget build(BuildContext context) {
 
     // final widgetBuilder = EventWidgets(context : context,args: {"selectedDate": selectedDate, "_selectDate": _selectDate, "navigatorKey": navigatorKey, "userId": widget.userId, "refresh": refresh, "_formKeyCategory": _formKeyCategory, "titleController":titleController, "_formKeyEvent": _formKeyEvent, "weightController":weightController});
-    final widgetBuilder = EventWidgets(context : context,args: {"refresh": refresh, "userId": widget.userId, "navigatorKey": navigatorKey});
+    final widgetBuilder = EventWidgets(context : context,args: {"refresh": refresh, "navigatorKey": navigatorKey});
 
     return WillPopScope(
       onWillPop: () async => !await navigatorKey.currentState!.maybePop(),
@@ -71,13 +71,13 @@ void refresh(){
           WidgetBuilder builder;
           switch (settings.name) {
             case '/':
-              builder = (BuildContext context) => widgetBuilder.EventWidget();
+              builder = (BuildContext context) => widgetBuilder.EventWidget(widget.userId);
               break;
             case '/categorySelection':
-              builder = (BuildContext context) => widgetBuilder.CategorySelection();
+              builder = (BuildContext context) => widgetBuilder.CategorySelection(widget.userId);
               break;
             case '/addEvent':
-              builder = (BuildContext context) => widgetBuilder.AddEventPage( settings.arguments as Category);
+              builder = (BuildContext context) => widgetBuilder.AddEventPage(settings.arguments as Map<String, dynamic>);
               break;
             default:
               throw Exception('Invalid route: ${settings.name}');
