@@ -7,6 +7,7 @@ import '../models/FriendsModel.dart';
 import '../services/friendService.dart';
 import '../widgets/UserViewer.dart';
 import '../widgets/EventWidgetClass.dart';
+import '../widgets/overlay.dart';
 
 class FriendsPage extends StatefulWidget {
   const FriendsPage({super.key, required this.userId});
@@ -20,6 +21,7 @@ class _FriendsPageState extends State<FriendsPage> {
   final FriendsService friendsService = FriendsService();
 
   final navigatorKey = GlobalKey<NavigatorState>();
+  // final TextEditingController _controller = TextEditingController();
 
   refresh(){
     setState(() {});
@@ -69,18 +71,19 @@ class _FriendsPageState extends State<FriendsPage> {
         children: [
           Expanded(
             flex: 4,
-            child: TextFormField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                hintText: 'Enter a username',
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a username';
-                }
-                return null;
-              },
-            ),
+            child: CountryFormField(controller: _controller),
+            // TextFormField(
+            //   controller: _controller,
+            //   decoration: const InputDecoration(
+            //     hintText: 'Enter a username',
+            //   ),
+            //   validator: (value) {
+            //     if (value == null || value.isEmpty) {
+            //       return 'Please enter a username';
+            //     }
+            //     return null;
+            //   },
+            // ),
           ),
           Expanded(
             flex: 1,

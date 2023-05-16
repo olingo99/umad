@@ -74,4 +74,15 @@ Future<User> tryLogin(String name, String password) async {
       throw Exception('Failed to get user');
     }
   }
+
+  Future<List<String>> getAllUserNames(String search) async{
+    final response = await httpServiceWrapper.post('/userNames', {'search': search});
+    print(response.body);
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      return jsonData.map((userJson) => userJson["Name"] as String).toList();
+    } else {
+      throw Exception('Failed to get user');
+    }
+  }
 }
