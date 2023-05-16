@@ -96,7 +96,13 @@ final navigatorKey = GlobalKey<NavigatorState>();
               ),
               ElevatedButton(
                 // onPressed: ()=> Navigator.of(context).pushNamed('/addEvent'),
-                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value) => setState((){})),
+                // onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value) => setState((){})),
+                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value){
+                  print("value update on pop");
+                  setState((){});
+
+                  }),
+
                 child: const Text('Add an event'))
             ],
           ),
@@ -255,14 +261,16 @@ final navigatorKey = GlobalKey<NavigatorState>();
                                   print(titleController.text);
                                   final newTemplate = EventTemplate(ideventTemplate: 0, name: titleController.text, iduser: widget.userId, proposedWeight: int.parse(weightController.text), idcategory: category.idcategory);
                                   eventTemplateService.addEventTemplate(newTemplate).then((value){
-                                    eventService.addEvent(newTemplate);
-
-                                    Navigator.popUntil(context, (route){
+                                    eventService.addEvent(newTemplate).then((value){
+                                      Navigator.popUntil(context, (route){
                                       print("route");
                                       print(route.settings.name);
                                       print(route.toString());
                                       return route.settings.name.toString()=='/';
                                     });
+                                    });
+
+                                    
                                   });
                                 }
                               },
