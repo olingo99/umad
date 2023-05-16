@@ -22,6 +22,7 @@ class _UserPageState extends State<UserPage> {
     _UserPageState();
 
     void refresh(){
+      didChangeDependencies();
         setState(() {});
     }
 
@@ -48,7 +49,7 @@ class _UserPageState extends State<UserPage> {
 
                           Expanded(
                             flex: 2,
-                            child: EventList(userId: widget.userId, date: DateTime.now())),
+                            child: EventList(userId: widget.userId, date: DateTime.now(), notifyParent: refresh)),
                        ],
                      );
                     //return Text('Data: ${teachers.length} teachers');

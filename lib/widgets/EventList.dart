@@ -6,10 +6,10 @@ import '../services/eventService.dart';
 import 'EventViewer.dart';
 
 class EventList extends StatefulWidget {
-  EventList({super.key, required this.userId, required this.date});
+  EventList({super.key, required this.userId, required this.date, required this.notifyParent});
   final int userId;
   final DateTime date;
-  // final Function() notifyParent;
+  final Function() notifyParent;
 
   @override
   State<EventList> createState() => _EventListState();
@@ -19,7 +19,7 @@ class _EventListState extends State<EventList> {
   final EventService eventService = EventService();
 
   void refresh(){
-    // widget.notifyParent();
+    widget.notifyParent();
     setState(() {});
   }
 
