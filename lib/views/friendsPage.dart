@@ -8,6 +8,7 @@ import '../services/friendService.dart';
 import '../widgets/UserViewer.dart';
 import '../widgets/EventWidgetClass.dart';
 import '../widgets/overlay.dart';
+import '../widgets/newSearch.dart';
 
 class FriendsPage extends StatefulWidget {
   const FriendsPage({super.key, required this.userId});
@@ -71,7 +72,7 @@ class _FriendsPageState extends State<FriendsPage> {
         children: [
           Expanded(
             flex: 4,
-            child: CountryFormField(controller: _controller),
+            child: searchBar(userId: widget.userId,),
             // TextFormField(
             //   controller: _controller,
             //   decoration: const InputDecoration(
