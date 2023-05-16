@@ -81,12 +81,12 @@ class UserViewer extends StatelessWidget {
       childrenWidget.add(futureEventViewer(friend));
       childrenWidget.add(Expanded(child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(onPressed: (){}, child: Text("Chat")),
+                          child: ElevatedButton(onPressed: (){}, child: Text("See Events")),
                           ))
                         );
       childrenWidget.add(Expanded(child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(onPressed: (){}, child: Text("Chat")),
+                          child: ElevatedButton(onPressed: (){}, child: Text("Add an event")),
                           ))
                         );
     }
@@ -113,7 +113,7 @@ class UserViewer extends StatelessWidget {
         if (snapshot.hasData) {
           return Expanded(flex:2,child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: EventViewer(event: snapshot.data![0], notifyParent: refresh,),
+            child: EventViewer(event: snapshot.data![0], notifyParent: refresh, friend: true,),
           ));
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");

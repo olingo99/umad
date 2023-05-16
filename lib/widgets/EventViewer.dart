@@ -10,7 +10,8 @@ class EventViewer extends StatelessWidget {
   final Event event;
   final EventService eventService = EventService();
   final Function notifyParent;
-  EventViewer({super.key, required this.event, required this.notifyParent});
+  final bool friend;
+  EventViewer({super.key, required this.event, required this.notifyParent, this.friend = false});
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +35,12 @@ class EventViewer extends StatelessWidget {
                 ),
               ),
               Text(event.weight.toString(), style: TextStyle(fontSize: 20, color: event.weight > 0 ? Colors.green : Colors.red)),
-              Padding(
+              friend? Container():Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(onPressed: (){
                   eventService.deleteEvent(event).then((value) => notifyParent(),);
                 }, child: Icon(Icons.delete)),
-              )
+              ),
             ],
           );
         }
@@ -50,4 +51,9 @@ class EventViewer extends StatelessWidget {
       }
     );
   }
+
+
+  // Widget deleteButton(){
+
+  // }
 }
