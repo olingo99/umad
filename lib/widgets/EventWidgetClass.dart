@@ -14,15 +14,15 @@ import '../services/eventService.dart';
 
 class EventWidgets{
   EventWidgets({required this.context, required this.args}){
-    selectedDate = args['selectedDate'];
-    _selectDate = args['_selectDate'];
+    // selectedDate = args['selectedDate'];
+    // _selectDate = args['_selectDate'];
     navigatorKey = args['navigatorKey'];
     userId = args['userId'];
     refresh = args['refresh'];
-    _formKeyCategory = args['_formKeyCategory'];
-    titleController = args['titleController'];
-    weightController = args['weightController'];
-    _formKeyEvent = args['_formKeyEvent'];
+    // _formKeyCategory = args['_formKeyCategory'];
+    // titleController = args['titleController'];
+    // weightController = args['weightController'];
+    // _formKeyEvent = args['_formKeyEvent'];
   }
 
   final CategoryService categoryService = CategoryService();
@@ -30,7 +30,7 @@ class EventWidgets{
   final BuildContext context;
   final Map<String, dynamic> args;
   DateTime selectedDate = DateTime.now();
-  Function _selectDate = (){};
+  // Function _selectDate = (){};
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   int userId = 0;
   Function refresh = (){};
@@ -41,9 +41,22 @@ class EventWidgets{
   final EventTemplateService eventTemplateService = EventTemplateService();
   final EventService eventService = EventService();
 
-
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      print("picked != null && picked != selectedDate");
+      print(picked);
+      selectedDate = picked;
+      refresh();
+    }
+  }
 
   Widget CategorySelection() {
+    print("CategorySelection");
     return FutureBuilder<List<Category>>(
       future :categoryService.getCategoriesByUserId(userId),
       builder: (context, snapshot){
@@ -133,7 +146,7 @@ class EventWidgets{
               ElevatedButton(
                 // onPressed: ()=> Navigator.of(context).pushNamed('/addEvent'),
                 // onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value) => setState((){})),
-                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection', arguments:{"userId": userId, "_formKeyCategory": _formKeyCategory, "titleController":titleController}).then((value){
+                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value){
                   print("value update on pop");
                   // setState((){});
                   refresh();

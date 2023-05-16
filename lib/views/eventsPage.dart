@@ -22,27 +22,27 @@ class EventsPage extends StatefulWidget {
 
 class _EventsPageState extends State<EventsPage> {
 
-  DateTime selectedDate = DateTime.now();
-  final CategoryService categoryService = CategoryService();
-  final EventTemplateService eventTemplateService = EventTemplateService();
-  final EventService eventService = EventService();
-  final _formKeyCategory = GlobalKey<FormState>();
-  final _formKeyEvent = GlobalKey<FormState>();
-  TextEditingController titleController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
+  // DateTime selectedDate = DateTime.now();
+  // final CategoryService categoryService = CategoryService();
+  // final EventTemplateService eventTemplateService = EventTemplateService();
+  // final EventService eventService = EventService();
+  // final _formKeyCategory = GlobalKey<FormState>();
+  // final _formKeyEvent = GlobalKey<FormState>();
+  // TextEditingController titleController = TextEditingController();
+  // TextEditingController weightController = TextEditingController();
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
-  }
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //       context: context,
+  //       initialDate: selectedDate,
+  //       firstDate: DateTime(2015, 8),
+  //       lastDate: DateTime(2101));
+  //   if (picked != null && picked != selectedDate) {
+  //     setState(() {
+  //       selectedDate = picked;
+  //     });
+  //   }
+  // }
 
   // void addEvent(){
   //   Navigator.of(context).pushNamed('/categorySelection');
@@ -51,14 +51,16 @@ class _EventsPageState extends State<EventsPage> {
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void refresh(){
-  setState((){});
+  setState((){
+  });
 }
 
 
 @override
   Widget build(BuildContext context) {
 
-    final widgetBuilder = EventWidgets(context : context,args: {"selectedDate": selectedDate, "_selectDate": _selectDate, "navigatorKey": navigatorKey, "userId": widget.userId, "refresh": refresh, "_formKeyCategory": _formKeyCategory, "titleController":titleController, "_formKeyEvent": _formKeyEvent, "weightController":weightController});
+    // final widgetBuilder = EventWidgets(context : context,args: {"selectedDate": selectedDate, "_selectDate": _selectDate, "navigatorKey": navigatorKey, "userId": widget.userId, "refresh": refresh, "_formKeyCategory": _formKeyCategory, "titleController":titleController, "_formKeyEvent": _formKeyEvent, "weightController":weightController});
+    final widgetBuilder = EventWidgets(context : context,args: {"refresh": refresh, "userId": widget.userId, "navigatorKey": navigatorKey});
 
     return WillPopScope(
       onWillPop: () async => !await navigatorKey.currentState!.maybePop(),
