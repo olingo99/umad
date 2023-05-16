@@ -7,7 +7,6 @@ import '../models/FriendsModel.dart';
 import '../services/friendService.dart';
 import '../widgets/UserViewer.dart';
 import '../widgets/EventWidgetClass.dart';
-import '../widgets/overlay.dart';
 import '../widgets/newSearch.dart';
 
 class FriendsPage extends StatefulWidget {
