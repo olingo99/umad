@@ -35,16 +35,11 @@ Future<User> tryLogin(String name, String password) async {
 
 
 
-  Future<User> checkUserName(String name) async {
+  Future<bool> checkUserName(String name) async {
     // final response = await http.get(Uri.parse('$baseUrl/user/name/$name'));
     final response = await httpServiceWrapper.get('/user/name/$name');
 
-    if (response.statusCode == 200) {
-      print(response.body);
-      return User.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to check username');
-    }
+    return response.statusCode == 200;
   }
 
   Future<User> addUser(String name, String password) async {

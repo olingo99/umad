@@ -72,37 +72,85 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
-                child: Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        try{
-                          final response = userService.tryLogin(usernameController.text, passwordController.text);
-                          // print(response);
-                          // final response2 = userService.checkUserName("postman");
-                          response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser))));
-                        }
-                        catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Wrong username or password')),
-                          );
-                        }
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Please fill input')),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Constants().colorButton,
-                      foregroundColor: Constants().colorText,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            try{
+                              final response = userService.tryLogin(usernameController.text, passwordController.text);
+                              // print(response);
+                              // final response2 = userService.checkUserName("postman");
+                              response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser))));
+                            }
+                            catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Wrong username or password')),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Please fill input')),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Constants().colorButton,
+                          foregroundColor: Constants().colorText,
+                        ),
+                        child: const Text('Submit'),
+                      ),
                     ),
-                    child: const Text('Submit'),
                   ),
-                ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            try{
+                              userService.checkUserName(usernameController.text).then((value) => {
+                                if (value){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Username already exist')),
+                                  )
+                                }
+                                else{
+                                  userService.addUser(usernameController.text, passwordController.text).then((value) => {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser)))
+                                  })
+                                }
+                              });
+                              // print(response);
+                              // final response2 = userService.checkUserName("postman");
+                              // response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser))));
+                            }
+                            catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Wrong username or password')),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Please fill input')),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Constants().colorButton,
+                          foregroundColor: Constants().colorText,
+                        ),
+                        child: const Text('sing up'),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
