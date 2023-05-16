@@ -11,9 +11,10 @@ import '../services/friendService.dart';
 import '../models/FriendsModel.dart';
 
 class UserViewer extends StatelessWidget {
-  UserViewer({super.key, required this.friend,required this.userId, this.request = false});
+  UserViewer({super.key, required this.friend,required this.userId, required this.notifyParent, this.request = false});
   final User friend;
   final int userId;
+  Function() notifyParent;
   bool request;
   final EventService eventService = EventService();
   List<Widget> childrenWidget = [];
@@ -61,11 +62,15 @@ class UserViewer extends StatelessWidget {
     if (request){
       childrenWidget.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(onPressed: (){friendsService.acceptFriendRequest(userId, friend.iduser);}, child: Text("Accept")),
+        child: ElevatedButton(onPressed: (){
+          friendsService.acceptFriendRequest(userId, friend.iduser).then((value) => notifyParent());
+          },
+           child: Text("Accept")
+          ),
       ));
       childrenWidget.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(onPressed: (){friendsService.declineFriendRequest(userId, friend.iduser);}, child: Text("Decline")),
+        child: ElevatedButton(onPressed: (){friendsService.declineFriendRequest(userId, friend.iduser).then((value) => notifyParent());}, child: Text("Decline")),
       ));
     }
     else{

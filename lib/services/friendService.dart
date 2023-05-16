@@ -19,40 +19,42 @@ class FriendsService {
     }
   }
 
-  Future<FriendsMap> addFriend(int idUser, String name) async {
+  Future<bool> addFriend(int idUser, String name) async {
     final response = await httpServiceWrapper.post(
       '/user/$idUser/friends',
       {'username': name},
     );
 
     if (response.statusCode == 200) {
-      return FriendsMap.fromJson(jsonDecode(response.body));
+      return true;
     } else {
       throw Exception('Failed to add friend');
     }
   }
 
-  Future<User> acceptFriendRequest(int idUser, int idFriend) async {
+  Future<FriendsMap> acceptFriendRequest(int idUser, int idFriend) async {
     final response = await httpServiceWrapper.post(
       '/user/$idUser/acceptFriend',
       {'idfriend': idFriend.toString()},
     );
 
     if (response.statusCode == 200) {
-      return User.fromJson(jsonDecode(response.body));
+      print('acceptFriendRequest');
+      print(response.body);
+      return FriendsMap.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to accept friend request');
     }
   }
 
-  Future<User> declineFriendRequest(int idUser, int idFriend) async {
+  Future<FriendsMap> declineFriendRequest(int idUser, int idFriend) async {
     final response = await httpServiceWrapper.post(
       '/user/$idUser/declineFriend',
       {'idfriend': idFriend.toString()},
     );
 
     if (response.statusCode == 200) {
-      return User.fromJson(jsonDecode(response.body));
+      return FriendsMap.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to decline friend request');
     }

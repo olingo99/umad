@@ -24,7 +24,7 @@ class FriendsMap {
     });
 
     factory FriendsMap.fromJson(Map<String, dynamic> json) => FriendsMap(
-        idfriendsMap: json["idfriendsMap"],
+        idfriendsMap: json["idfriendsmap"],
         iduser: json["iduser"],
         date: DateTime.parse(json["date"]),
         idfriend: json["idfriend"],
