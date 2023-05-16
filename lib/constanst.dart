@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Constants{
-  static const String API_URL = 'http://localhost:3000';
+  // static const String API_URL = 'http://localhost:3000';
 
   // static const String API_URL = 'http://pat.infolab.ecam.be:60840';
-  // static const String API_URL = 'https://pat.infolab.ecam.be:64340';
+  static const String API_URL = 'https://pat.infolab.ecam.be:64340';
 
 
   Color colorLink = const Color(0xFF0e131f);

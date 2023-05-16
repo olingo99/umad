@@ -15,12 +15,10 @@ class searchBar extends StatefulWidget {
 class _searchBarState extends State<searchBar> {
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.search),
-      onPressed: () {
+    return ElevatedButton(onPressed: () {
         showSearch(context: context, delegate: SearchBarDelegate(userId:widget.userId));
-      },
-    );
+      }, child:Text("Add Friend"));
+
   }
 }
 

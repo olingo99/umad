@@ -62,54 +62,51 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 
-  Widget addFriendForm(){
-    final _formKey = GlobalKey<FormState>();
-    final TextEditingController _controller = TextEditingController();
-    return Form(
-      key: _formKey,
-      child: Row(
-        children: [
-          Expanded(
-            flex: 4,
-            child: searchBar(userId: widget.userId,),
-            // TextFormField(
-            //   controller: _controller,
-            //   decoration: const InputDecoration(
-            //     hintText: 'Enter a username',
-            //   ),
-            //   validator: (value) {
-            //     if (value == null || value.isEmpty) {
-            //       return 'Please enter a username';
-            //     }
-            //     return null;
-            //   },
-            // ),
-          ),
-          Expanded(
-            flex: 1,
-            child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  friendsService.addFriend(widget.userId, _controller.text);
-                  _controller.clear();
-                }
-              },
-              child: const Text('Add Friend'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget addFriendForm(){
+  //   final _formKey = GlobalKey<FormState>();
+  //   final TextEditingController _controller = TextEditingController();
+  //   return Form(
+  //     key: _formKey,
+  //     child: Row(
+  //       children: [
+  //         Expanded(
+  //           flex: 4,
+  //           child: searchBar(userId: widget.userId,),
+  //           // TextFormField(
+  //           //   controller: _controller,
+  //           //   decoration: const InputDecoration(
+  //           //     hintText: 'Enter a username',
+  //           //   ),
+  //           //   validator: (value) {
+  //           //     if (value == null || value.isEmpty) {
+  //           //       return 'Please enter a username';
+  //           //     }
+  //           //     return null;
+  //           //   },
+  //           // ),
+  //         ),
+  //         Expanded(
+  //           flex: 1,
+  //           child: ElevatedButton(
+  //             onPressed: () {
+  //               if (_formKey.currentState!.validate()) {
+  //                 friendsService.addFriend(widget.userId, _controller.text);
+  //                 _controller.clear();
+  //               }
+  //             },
+  //             child: const Text('Add Friend'),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget mainFriendPage(context){
     return Column(
       
       children: [
-        Expanded(
-          flex: 1,
-          child : addFriendForm(),
-        ),
+
         Expanded(
           flex: 6,
           child: FutureBuilder(
@@ -159,7 +156,11 @@ class _FriendsPageState extends State<FriendsPage> {
               return Text("Loading");
             }
             ),
-        )
+        ),
+                Expanded(
+          flex: 1,
+          child : searchBar(userId: widget.userId,),
+        ),
       ],
     );
   }
