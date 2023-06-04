@@ -38,6 +38,7 @@ class EventWidgets{
   GlobalKey<FormState> _formKeyEvent = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   TextEditingController weightController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
   final EventTemplateService eventTemplateService = EventTemplateService();
   final EventService eventService = EventService();
 
@@ -67,9 +68,9 @@ class EventWidgets{
             children: [
               Expanded(
                 flex: 3,
-                child: ListView.builder(
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
+                child: 
+                ListView.separated(
+                  itemBuilder:(context, index) {
                     return ListTile(
                       title: Text(categories[index].name),
                       onTap: () {
@@ -77,55 +78,72 @@ class EventWidgets{
                       },
                     );
                   },
-                ),
+                  separatorBuilder: (context, index) => const Divider(
+                    color: Colors.black,
+                  ),
+                  itemCount: categories.length)
               ),
                 Expanded(
                   flex:1,
-                  child: Form(
-                    key:_formKeyCategory,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex:4,
-                          child: TextFormField(
-                            controller: titleController,
-                            validator: (value){
-                              if(value == null || value.isEmpty){
-                                return 'Please enter a category name';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          flex:1,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKeyCategory.currentState!.validate()) {
-                                // print(titleController.text);
-                                categoryService.addCategory(userId, titleController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':value}));
-                              }
-                            },
-                            child: const Text('Submit new category'),
-                          ),
-                        ),
-                      ],
-                    )
-                    ),
+                  child: newCategoryWidget(userId, context),
                 )
                 ],
           );
         }
         if(snapshot.hasError) {
           print("error");
-          return Text("${snapshot.error}");
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Expanded(flex:4,child:  Align(alignment: Alignment.center, child: Text("No event categories Yet, create the first one!", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)))),
+              Expanded(flex:1,child: Align(alignment: Alignment.bottomCenter, child: newCategoryWidget( userId, context))),
+            ],
+          );
         }
         return CircularProgressIndicator();
       }
     );
   }
 
-    Widget EventWidget(int userId){
+  Widget newCategoryWidget(int userId, BuildContext context){
+    return  Form(
+      key:_formKeyCategory,
+      child: Row(
+        children: [
+          Expanded(
+            flex:3,
+            child: TextFormField(
+              controller: categoryController,
+              decoration: const InputDecoration(
+              border: OutlineInputBorder(), labelText: "New category"),
+              validator: (value){
+                if(value == null || value.isEmpty){
+                  return 'Please enter a category name';
+                }
+                return null;
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+                onPressed: () {
+                  if (_formKeyCategory.currentState!.validate()) {
+                    // print(titleController.text);
+                    categoryService.addCategory(userId, categoryController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':value}));
+                  }
+                },
+                // child: const Text('Submit new category'),
+                child: const Icon(Icons.add),
+              ),
+          ),
+        
+        ],
+      )
+    );
+  }
+
+  Widget EventWidget(int userId){
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -185,16 +203,40 @@ class EventWidgets{
           List<EventTemplate> eventTemplates = snapshot.data ?? [];
           return Column(
             children: [
+              Expanded(flex:1,child: newEventWidget(context,userId, category)),
+              Text("Templates of : ${category.name}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const Divider(
+                color: Colors.black,
+              ),
+        //       Row(
+        //           children: const [
+        //   Expanded(flex:2,child: Text("Name", style: TextStyle(fontSize: 20))),
+        //   Expanded(
+        //     flex:1,
+        //     child: Text("Weight", style: TextStyle(fontSize: 20))
+        //   ),
+        //   Expanded(
+        //     flex:1,
+        //     child: SizedBox.shrink()
+        //     ),
+        //     Expanded(
+        //     flex:1,
+        //     child: SizedBox.shrink()
+        //     )
+        // ],
+        //         ),
               Expanded(
-                flex: 3,
-                child: ListView.builder(
-                  itemCount: eventTemplates.length,
+                flex: 4,
+                child: 
+                ListView.separated(
                   itemBuilder: (context, index) {
                     return EventTemplateWidget(template: eventTemplates[index]);
                   },
-                ),
+                  separatorBuilder: (context, index) => const Divider(
+                    color: Colors.black,
+                  ),
+                  itemCount: eventTemplates.length)
               ),
-              newEventWidget(context,userId, category),
             ],
           );
         }
@@ -208,69 +250,81 @@ class EventWidgets{
   }
 
   Widget newEventWidget(context,int userId, Category category){
-    return  Expanded(
-                  flex:1,
-                  child: Form(
-                      key:_formKeyEvent,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex:4,
-                            child: TextFormField(
-                              controller: titleController,
-                              validator: (value){
-                                if(value == null || value.isEmpty){
-                                  return 'Please enter a category name';
-                                }
-                                return null;
-                              },
-                            ),
+    // titleController.text = "";
+    return  Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(5.0),
+          child: Text("New event", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        ),
+        Form(
+                  key:_formKeyEvent,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex:4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: TextFormField(
+                            controller: titleController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(), labelText: "Event"),
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return 'Please enter an event name';
+                              }
+                              return null;
+                            },
                           ),
-                          Expanded(
-                            flex:4,
-                            child: TextFormField(
-                              controller: weightController,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                // FilteringTextInputFormatter.digitsOnly,
-                                FilteringTextInputFormatter.allow(RegExp(r'^-?\d*')),
-                              ],
-                              validator: (value) {
-                                if(value == null || value.isEmpty) {
-                                  return "Please enter a weight";
-                                }
-                                return null;
-                              },
-                              ),
+                        ),
+                      ),
+                      Expanded(
+                        flex:3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: TextFormField(
+                            controller: weightController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(), labelText: "Weight"),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              // FilteringTextInputFormatter.digitsOnly,
+                              FilteringTextInputFormatter.allow(RegExp(r'^-?\d*')),
+                            ],
+                            validator: (value) {
+                              if(value == null || value.isEmpty) {
+                                return "Please enter a weight";
+                              }
+                              return null;
+                            },
                             ),
-                          Expanded(
-                            flex:1,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKeyEvent.currentState!.validate()) {
-                                  print(titleController.text);
-                                  final newTemplate = EventTemplate(ideventTemplate: 0, name: titleController.text, iduser: userId, proposedWeight: int.parse(weightController.text), idcategory: category.idcategory);
-                                  eventTemplateService.addEventTemplate(newTemplate).then((value){
-                                    eventService.addEvent(newTemplate).then((value){
-                                      Navigator.popUntil(context, (route){
-                                      print("route");
-                                      print(route.settings.name);
-                                      print(route.toString());
-                                      return route.settings.name.toString()=='/';
-                                    });
-                                    });
+                        ),
+                        ),
+                      Expanded(
+                        flex:1,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKeyEvent.currentState!.validate()) {
+                              final newTemplate = EventTemplate(ideventTemplate: 0, name: titleController.text, iduser: userId, proposedWeight: int.parse(weightController.text), idcategory: category.idcategory);
+                              eventTemplateService.addEventTemplate(newTemplate).then((value){
+                                eventService.addEvent(newTemplate).then((value){
+                                  Navigator.popUntil(context, (route){
+                                  return route.settings.name.toString()=='/';
+                                });
+                                });
 
-                                    
-                                  });
-                                }
-                              },
-                              child: const Text('Submit'),
-                            ),
-                          ),
-                        ],
-                      )
+                                
+                              });
+                            }
+                          },
+                          child: const Center(child: Icon(Icons.add)),
+                        ),
+                      ),
+                    ],
                   )
-              );
+              ),
+      ],
+    );
   }
 
 

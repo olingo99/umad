@@ -23,7 +23,7 @@ class EventTemplateWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(flex:2,child: Text(template.name, style: TextStyle(fontSize: 20))),
+          Expanded(flex:4,child: Text(template.name, style: TextStyle(fontSize: 20))),
           Expanded(
             flex:1,
             child: TextFormField(
@@ -41,36 +41,37 @@ class EventTemplateWidget extends StatelessWidget {
             },
             ),
           ),
-          Expanded(
-            flex:1,
-            child: ElevatedButton(
-              onPressed: () {
-                if(_formKey.currentState!.validate()) {
-                  // template.proposedWeight = int.parse(_controller.text);
-                  template.proposedWeight = int.parse(_controller.text);
-                  eventService.addEvent(template);
-                  // Navigator.pop(context, template);
-                  Navigator.popUntil(context, (route){
-                    print("route");
-                    print(route.settings.name);
-                    print(route.toString());
-                    return route.settings.name.toString()=='/';
-                  });
-                }
-              },
-              child: Text("Add"),
-            )
+          Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  if(_formKey.currentState!.validate()) {
+                    // template.proposedWeight = int.parse(_controller.text);
+                    template.proposedWeight = int.parse(_controller.text);
+                    eventService.addEvent(template);
+                    // Navigator.pop(context, template);
+                    Navigator.popUntil(context, (route){
+            
+                      return route.settings.name.toString()=='/';
+                    });
+                  }
+                },
+                child: const Center(child: Icon(Icons.add)),
+              ),
             ),
             Expanded(
-            flex:1,
-            child: ElevatedButton(
-              onPressed: () {
-                if(_formKey.currentState!.validate()) {
-                  template.proposedWeight = int.parse(_controller.text);
-                  eventTemplateService.updateEventTemplate(template);
-                }
-              },
-              child: Text("Adjust"),
+            flex:2,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  if(_formKey.currentState!.validate()) {
+                    template.proposedWeight = int.parse(_controller.text);
+                    eventTemplateService.updateEventTemplate(template);
+                  }
+                },
+                child: const Text("Adjust"),
+              ),
             )
             )
         ],

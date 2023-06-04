@@ -117,7 +117,7 @@ class UserViewer extends StatelessWidget {
       //                   );
     }
     return SizedBox(
-      height: 130,
+      height: 100,
       child: Row(
         children: childrenWidget,
       ),

@@ -80,7 +80,14 @@ class _FriendsPageState extends State<FriendsPage> {
                 return ListView.builder(
                   itemCount: friends.length,
                   itemBuilder: (context, index) {
-                    return UserViewer(friend: friends[index], userId: widget.userId, notifyParent: refresh, request: false,);
+                    return Container(
+                      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
+                      decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                      child: UserViewer(friend: friends[index], userId: widget.userId, notifyParent: refresh, request: false,)
+                      );
                   },
                 );
               }
@@ -105,7 +112,14 @@ class _FriendsPageState extends State<FriendsPage> {
                 return ListView.builder(
                   itemCount: friends.length,
                   itemBuilder: (context, index) {
-                    return UserViewer(friend: friends[index],userId: widget.userId,notifyParent: refresh, request: true,);
+                    return Container(
+                      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
+                      decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                      child: UserViewer(friend: friends[index],userId: widget.userId,notifyParent: refresh, request: true,),
+                    );
                   },
                 );
               }
@@ -118,7 +132,7 @@ class _FriendsPageState extends State<FriendsPage> {
             }
             ),
         ),
-searchBar(userId: widget.userId,),
+        searchBar(userId: widget.userId,),
       ],
     );
   }
