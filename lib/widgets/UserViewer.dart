@@ -28,8 +28,12 @@ class UserViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     childrenWidget = [
-          Image.asset(
-            getSourceImage(friend.mood),
+          Semantics(
+            label: 'Image of ${friend.name} with a curse level of ${(-friend.mood/14).ceil()}',
+            excludeSemantics: true,
+            child: Image.asset(
+              getSourceImage(friend.mood),
+            ),
           ),
           Expanded(
             flex: 2,
