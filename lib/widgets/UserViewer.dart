@@ -98,13 +98,13 @@ class UserViewer extends StatelessWidget {
     );
   }
 
-  Widget friendBuilder(){
-    return const Placeholder();
-  }
+  // Widget friendBuilder(){
+  //   return const Placeholder();
+  // }
 
-  Widget requestBuilder(){
-    return const Placeholder();
-  }
+  // Widget requestBuilder(){
+  //   return const Placeholder();
+  // }
 
   Widget futureEventViewer(User friend) {
     return FutureBuilder<List<Event>>(
