@@ -31,12 +31,16 @@ class UserViewer extends StatelessWidget {
           Semantics(
             label: 'Image of ${friend.name} with a curse level of ${(-friend.mood/14).ceil()}',
             excludeSemantics: true,
-            child: Image.asset(
-              getSourceImage(friend.mood),
+            child: Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Image.asset(
+                getSourceImage(friend.mood),
+                width: 100,
+              ),
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -73,29 +77,47 @@ class UserViewer extends StatelessWidget {
         child: ElevatedButton(onPressed: (){
           friendsService.acceptFriendRequest(userId, friend.iduser).then((value) => notifyParent());
           },
-           child: Text("Accept")
+           child:const  Text("Accept")
           ),
       ));
       childrenWidget.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(onPressed: (){friendsService.declineFriendRequest(userId, friend.iduser).then((value) => notifyParent());}, child: Text("Decline")),
+        child: ElevatedButton(onPressed: (){friendsService.declineFriendRequest(userId, friend.iduser).then((value) => notifyParent());}, child:const Text("Decline")),
       ));
     }
     else{
-      childrenWidget.add(futureEventViewer(friend));
-      childrenWidget.add(Expanded(child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/seeEvents', arguments: friend.iduser);}, child: Text("See Events")),
-                          ))
-                        );
-      childrenWidget.add(Expanded(child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/categorySelection', arguments: friend.iduser);}, child: Text("Add an event")),
-                          ))
-                        );
+      childrenWidget.add(
+        Expanded(
+          flex: 3,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center , 
+            children: [
+            // futureEventViewer(friend),
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SizedBox(width:115,child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/seeEvents', arguments: friend.iduser);}, child: const Text("See Events"))),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SizedBox(width:115, child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/categorySelection', arguments: friend.iduser);}, child: const Text("Add an event"))),
+            ) ,        
+          ],)
+        )
+      );
+      // childrenWidget.add(futureEventViewer(friend));
+      // childrenWidget.add(Expanded(child: Padding(
+      //                     padding: const EdgeInsets.all(8.0),
+      //                     child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/seeEvents', arguments: friend.iduser);}, child: Text("See Events")),
+      //                     ))
+      //                   );
+      // childrenWidget.add(Expanded(child: Padding(
+      //                     padding: const EdgeInsets.all(8.0),
+      //                     child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/categorySelection', arguments: friend.iduser);}, child: Text("Add an event")),
+      //                     ))
+      //                   );
     }
     return SizedBox(
-      height: 100,
+      height: 130,
       child: Row(
         children: childrenWidget,
       ),

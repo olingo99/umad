@@ -48,10 +48,10 @@ class _HomePageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: widget.userId == 0 ? const Text('Home') : const Text('User'),
+        title: widget.userId == 0 ? const Text('Home') : const Text('UMad?'),
         centerTitle: true,
         leading: widget.userId == 0 ? null : IconButton(
-          icon: const Icon(Icons.home),
+          icon: const Icon(Icons.logout),
           onPressed: () {
             Navigator.pop(context);
           },

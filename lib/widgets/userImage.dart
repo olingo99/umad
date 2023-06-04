@@ -25,7 +25,8 @@ class _UserImageState extends State<UserImage> {
           
           Image.asset(
             getSourceImage(widget.userMood),
-
+            semanticLabel: "User image",
+            width: 100,
           ),
           //make a linear gauge ranging from -100 to 100 with 0 in the middle and the current mood as the value and the color of the gauge should be green if the mood is above 0 and red if the mood is below 0
           SfLinearGauge(

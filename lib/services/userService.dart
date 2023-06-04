@@ -29,6 +29,7 @@ Future<User> tryLogin(String name, String password) async {
       });
       // storage.read(key: 'token').then((value) => print(value??''));
     } else {
+      print("Failed to login");
       throw Exception('Failed to login');
     }
   }

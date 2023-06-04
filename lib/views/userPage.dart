@@ -49,7 +49,21 @@ class _UserPageState extends State<UserPage> {
 
                           Expanded(
                             flex: 2,
-                            child: EventList(userId: widget.userId, date: DateTime.now(), notifyParent: refresh)),
+                            child: Container(
+                              // margin: const EdgeInsets.all(15.0),
+                              margin: const EdgeInsets.fromLTRB(0, 5.0,0, 0),
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                children: [
+                                  Title(color: Colors.white, child: const Text("Today's Events", style: TextStyle(fontSize: 25, color: Colors.white),)),
+                                  Expanded(child: EventList(userId: widget.userId, date: DateTime.now(), notifyParent: refresh)),
+                                ],
+                              ))
+                            ),
                        ],
                      );
                     //return Text('Data: ${teachers.length} teachers');

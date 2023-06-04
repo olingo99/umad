@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 import '/views/loginPage.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'constanst.dart';
 
 /// Flutter code sample for [BottomNavigationBar].
 
@@ -18,8 +18,9 @@ class MyApp extends StatelessWidget {
     Widget build(BuildContext context) {
       return MaterialApp(
         home: LoginPage(),
-        theme: ThemeData.light().copyWith(textTheme: GoogleFonts.latoTextTheme(), ),
-        darkTheme:ThemeData.dark(),
+        theme: CustomDarkTheme.darkTheme,
+        // theme: CustomDarkTheme.darkTheme,
+        // darkTheme:CustomDarkTheme.darkTheme,
       );
     }
 }

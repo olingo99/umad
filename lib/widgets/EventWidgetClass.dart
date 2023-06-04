@@ -132,30 +132,20 @@ class EventWidgets{
         Expanded(
           flex: 1,
           child: Row(
-            children: [
-              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("${selectedDate.toLocal()}".split(' ')[0]),
-                  const SizedBox(height: 20.0,),
+                  Text(
+                    "Events of : "+"${selectedDate.toLocal()}".split(' ')[0],
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                  ),
+                  // const SizedBox(height: 20.0,),
                   ElevatedButton(
                     onPressed: () => _selectDate(context),
                     child: const Text('Select date'),
                   ),
                 ],
               ),
-              ElevatedButton(
-                // onPressed: ()=> Navigator.of(context).pushNamed('/addEvent'),
-                // onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection').then((value) => setState((){})),
-                onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection', arguments: userId).then((value){
-                  print("value update on pop");
-                  // setState((){});
-                  refresh();
-
-                  }),
-
-                child: const Text('Add an event'))
-            ],
-          ),
         ),
         Expanded(
           flex: 4,
@@ -163,6 +153,21 @@ class EventWidgets{
             
           },),
         ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            
+            child: ElevatedButton(
+                    onPressed: () => navigatorKey.currentState!.pushNamed('/categorySelection', arguments: userId).then((value){
+                      print("value update on pop");
+                      // setState((){});
+                      refresh();
+                      }),
+                    child: const Text('Add an event')
+                  ),
+          ),
+        )
       ],
     );
   }

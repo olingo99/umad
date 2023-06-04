@@ -20,34 +20,42 @@ class EventViewer extends StatelessWidget {
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           Category category = snapshot.data ?? Category(idcategory: 0, name: "error", iduser: 0);
-          return Row(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                flex:5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(event.name, style: TextStyle(fontSize: 20)),
-                    Text("  ${category.name}", style: TextStyle(fontSize: 15, color: Colors.grey)),
-                  ],
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 4),
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black45),
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex:5,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(event.name, style: const TextStyle(fontSize: 20)),
+                      Text("Category :  ${category.name}", style: const TextStyle(fontSize: 15, color: Colors.grey)),
+                    ],
+                  ),
                 ),
-              ),
-              Text(event.weight.toString(), style: TextStyle(fontSize: 20, color: event.weight > 0 ? Colors.green : Colors.red)),
-              friend? Container():Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(onPressed: (){
-                  eventService.deleteEvent(event).then((value) => notifyParent(),);
-                }, child: Icon(Icons.delete)),
-              ),
-            ],
+                Text(event.weight.toString(), style: TextStyle(fontSize: 20, color: event.weight > 0 ? Colors.green : Colors.red)),
+                friend? Container():Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(onPressed: (){
+                    eventService.deleteEvent(event).then((value) => notifyParent(),);
+                  }, child: const Icon(Icons.delete)),
+                ),
+              ],
+            ),
           );
         }
         if(snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       }
     );
   }

@@ -15,14 +15,17 @@ class searchBar extends StatefulWidget {
 class _searchBarState extends State<searchBar> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: () {
-        showSearch(context: context, delegate: SearchBarDelegate(userId:widget.userId));
-      }, child:Text("Add Friend"));
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+      child: ElevatedButton(onPressed: () {
+          showSearch(context: context, delegate: SearchBarDelegate(userId:widget.userId));
+        }, child:const Text("Add Friend")),
+    );
 
   }
 }
 
-class SearchBarDelegate extends SearchDelegate{
+class SearchBarDelegate extends SearchDelegate{  
 
   SearchBarDelegate({required this.userId});
   final int userId;  

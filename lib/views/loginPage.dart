@@ -40,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding:
@@ -82,17 +83,12 @@ class _LoginPageState extends State<LoginPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            try{
                               final response = userService.tryLogin(usernameController.text, passwordController.text);
-                              // print(response);
-                              // final response2 = userService.checkUserName("postman");
-                              response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser))));
-                            }
-                            catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Wrong username or password')),
-                              );
-                            }
+                              response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser)))).catchError( (e) => {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Wrong username or password')),
+                                )
+                              });
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Please fill input')),
@@ -127,9 +123,6 @@ class _LoginPageState extends State<LoginPage> {
                                   })
                                 }
                               });
-                              // print(response);
-                              // final response2 = userService.checkUserName("postman");
-                              // response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser))));
                             }
                             catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
