@@ -114,22 +114,22 @@ class UserViewer extends StatelessWidget {
     );
   }
 
-  Widget futureEventViewer(User friend) {
-    return FutureBuilder<List<Event>>(
-      future: eventService.getLastEventsByUserId(friend.iduser),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Expanded(flex:2,child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: EventViewer(event: snapshot.data![0], notifyParent: refresh, friend: true,),
-          ));
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
-        return const Placeholder();
-      },
-    );
-  }
+  // Widget futureEventViewer(User friend) {
+  //   return FutureBuilder<List<Event>>(
+  //     future: eventService.getLastEventsByUserId(friend.iduser),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasData) {
+  //         return Expanded(flex:2,child: Padding(
+  //           padding: const EdgeInsets.all(10.0),
+  //           child: EventViewer(event: snapshot.data![0], notifyParent: refresh, friend: true,),
+  //         ));
+  //       } else if (snapshot.hasError) {
+  //         return Text("${snapshot.error}");
+  //       }
+  //       return const Placeholder();
+  //     },
+  //   );
+  // }
 
 
   String getSourceImage(int mood){

@@ -35,7 +35,7 @@ void refresh(){                              //refreshes the page, function to b
           WidgetBuilder builder;
           switch (settings.name) {
             case '/':
-              builder = (BuildContext context) => widgetBuilder.EventWidget(widget.userId);                               //main events page, shows the events of the user
+              builder = (BuildContext context) => widgetBuilder.EventWidget(widget.userId, friendMode: false);                               //main events page, shows the events of the user
               break;
             case '/categorySelection':
               builder = (BuildContext context) => widgetBuilder.CategorySelection(widget.userId);                         //shows the categories of the user, displayed when the user wants to add an event

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import '../models/EventModel.dart';
 import '../services/eventService.dart';
 import '../models/CategoryModel.dart';
 import '../services/categoryService.dart';
 
 class EventViewer extends StatelessWidget {
-  final Event event;
+  final Event event;  //event to display
   final EventService eventService = EventService();
-  final Function notifyParent;
-  final bool friend;
+  final Function notifyParent;  //function to notify the parent widget to refresh
+  final bool friend;  //if the event is displayed in the friend page
   EventViewer({super.key, required this.event, required this.notifyParent, this.friend = false});
 
   @override

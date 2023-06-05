@@ -44,7 +44,7 @@ class _FriendsPageState extends State<FriendsPage> {
               builder = (BuildContext context) => mainFriendPage(context);                                                  //main friend page, shows the friends and friend requests
               break;
             case '/seeEvents':
-              builder = (BuildContext context) => widgetBuilder.EventWidget(settings.arguments as int);                     //shows the events of a friend
+              builder = (BuildContext context) => widgetBuilder.EventWidget(settings.arguments as int, friendMode: true);                     //shows the events of a friend
               break;
             case '/categorySelection':
               builder = (BuildContext context) => widgetBuilder.CategorySelection(settings.arguments as int);              //shows the categories of a friend, displayed when the user wants to add an event to a friend         

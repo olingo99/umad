@@ -4,10 +4,11 @@ import '../services/eventService.dart';
 import 'EventViewer.dart';
 
 class EventList extends StatefulWidget {
-  const EventList({super.key, required this.userId, required this.date, required this.notifyParent});
+  const EventList({super.key, required this.userId, required this.date, required this.notifyParent, required this.friendMode});
   final int userId;           // The user id used to get the events
   final DateTime date;        // The date to get the events from
   final Function() notifyParent;  // Function to notify the parent widget to refresh
+  final bool friendMode;      // Whether the user is viewing their own events or a friend's events
 
   @override
   State<EventList> createState() => _EventListState();
@@ -33,7 +34,7 @@ class _EventListState extends State<EventList> {
           return ListView.builder(
             itemCount: events.length,
             itemBuilder: (context, index) {
-              return EventViewer(event: events[index], notifyParent: refresh,);  //Build the event viewer widget for each event
+              return EventViewer(event: events[index], notifyParent: refresh, friend: widget.friendMode,);  //Build the event viewer widget for each event
             },
           );
         }

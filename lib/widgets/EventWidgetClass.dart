@@ -143,7 +143,7 @@ class EventWidgets{
     );
   }
 
-  Widget EventWidget(int userId){
+  Widget EventWidget(int userId, {required bool friendMode}){
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -167,9 +167,7 @@ class EventWidgets{
         ),
         Expanded(
           flex: 4,
-          child: EventList(date: selectedDate, userId: userId,notifyParent: () {
-            
-          },),
+          child: EventList(date: selectedDate, userId: userId,notifyParent: () {},friendMode: friendMode,),
         ),
         Align(
           alignment: Alignment.centerRight,
