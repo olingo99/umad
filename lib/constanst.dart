@@ -48,7 +48,6 @@ class CustomDarkTheme{
         ),
       ),
     ),
-    // colorScheme: ThemeData.dark().colorScheme.copyWith(background: Colors.red),
-    // scaffoldBackgroundColor: Colors.red,
+
   );
 }

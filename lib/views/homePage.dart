@@ -30,14 +30,6 @@ class _HomePageState
   ];
 }
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  
-
-
-
-
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

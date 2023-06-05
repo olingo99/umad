@@ -6,9 +6,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../httpServiceWrapper.dart';
 
+
+
+///First page of the app, the login page composed of 2 text input widgets and 2 buttons one to login and one to register
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
-
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -34,18 +37,13 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Constants().colorTopbar,
         centerTitle: true,
       ),
-      body:Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: TextFormField(
+      body: _loginForm(),
+    );
+  }
+
+
+  Widget _usernameField(){
+    return TextFormField(
                   controller: usernameController,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: "Username"),
@@ -55,12 +53,11 @@ class _LoginPageState extends State<LoginPage> {
                     }
                     return null;
                   },
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: TextFormField(
+                );
+  }
+
+  Widget _passwordField(){
+    return TextFormField(
                   controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
@@ -71,16 +68,12 @@ class _LoginPageState extends State<LoginPage> {
                     }
                     return null;
                   },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
-                    child: Center(
-                      child: ElevatedButton(
+                );
+  }
+
+
+  Widget __signinButton(){
+    return ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                               final response = userService.tryLogin(usernameController.text, passwordController.text);
@@ -100,14 +93,12 @@ class _LoginPageState extends State<LoginPage> {
                           foregroundColor: Constants().colorText,
                         ),
                         child: const Text('Sign In'),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
-                    child: Center(
-                      child: ElevatedButton(
+                      );
+  }
+
+
+  Widget __signupButton(){
+    return ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             try{
@@ -140,7 +131,43 @@ class _LoginPageState extends State<LoginPage> {
                           foregroundColor: Constants().colorText,
                         ),
                         child: const Text('Sign up'),
-                      ),
+                      );
+  }
+
+  Widget _loginForm(){
+    return Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                child: _usernameField(),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                child: _passwordField(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
+                    child: Center(
+                      child: __signinButton(),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
+                    child: Center(
+                      child: __signupButton(),
                     ),
                   ),
                 ],
@@ -148,8 +175,7 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-      )
-    );
+      );
   }
 
 }
