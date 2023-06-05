@@ -7,8 +7,8 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 
 class UserImage extends StatefulWidget {
-    final int userMood;
-    bool vertical;
+    final int userMood;   //mood of the user, between -100 and 100
+    bool vertical;        //if true, the gauge is vertical, else it is horizontal
     UserImage({ Key? key,  required this.userMood, this.vertical = false }) : super(key: key);
   
     @override
@@ -17,29 +17,28 @@ class UserImage extends StatefulWidget {
 
 class _UserImageState extends State<UserImage> {
 
+
+    // build the widget containing the image and the gauge
     @override
     Widget build(BuildContext context) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          
-          Image.asset(
-            getSourceImage(widget.userMood),
+          Image.asset(                            //image of the user
+            getSourceImage(widget.userMood),      //get the image corresponding to the mood
             semanticLabel: "User image",
             width: 100,
           ),
-          //make a linear gauge ranging from -100 to 100 with 0 in the middle and the current mood as the value and the color of the gauge should be green if the mood is above 0 and red if the mood is below 0
-          SfLinearGauge(
-            minimum: -100.0,
-            maximum: 100.0,
-            interval: 50,
-            orientation: widget.vertical ? LinearGaugeOrientation.horizontal:LinearGaugeOrientation.vertical,
-            barPointers: [
-              LinearBarPointer(
+          SfLinearGauge(                        //gauge of the user's mood
+            minimum: -100.0,                  //minimum value of the gauge
+            maximum: 100.0,                   //maximum value of the gauge
+            interval: 50,                     //interval between each tick
+            orientation: widget.vertical ? LinearGaugeOrientation.horizontal:LinearGaugeOrientation.vertical, //if vertical is true, the gauge is vertical, else it is horizontal
+            barPointers: [                  //pointer of the gauge
+              LinearBarPointer( 
                 value: widget.userMood.toDouble(),
                 thickness: 20,
-                shaderCallback: (bounds) => const LinearGradient(
-
+                shaderCallback: (bounds) => const LinearGradient(   //color gradient of the gauge, TODO updated as to make the color gradient be static but to display only a part of it
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
                         colors: [
@@ -49,148 +48,19 @@ class _UserImageState extends State<UserImage> {
                           Color(0xff00FF94),
                         ]).createShader(bounds),
                   )
-                
-                // color: widget.userMood > 0 ? Colors.green : Colors.red
             ],
           )
 
         ]);
     }
 
-    String getSourceImage(int mood){
+    String getSourceImage(int mood){  //get the image corresponding to the mood
     if (mood >90){
       return "assets/images/verryHappy.png";
     }
     if (mood >=0){
       return "assets/images/happy.png";
     }
-    return 'assets/images/sad${(-mood/14).ceil()}.png';
+    return 'assets/images/sad${(-mood/14).ceil()}.png'; //the image is chosen according to the curse level, we have 8 images for the sad mood with a mood going from -1 to -100 (for sad)
   }
 }
-
-
-
-// class _UserImageState extends State<UserImage> {
-
-//     @override
-//     Widget build(BuildContext context) {
-//       return Column(
-//         children: [
-//           Image.asset(
-//             getSourceImage(widget.userMood),
-//             width: 100,
-//             height: 100,
-//           ),
-//           Row(
-//             children: [
-//               Expanded(
-//                 child: const Text(
-//                   "-100",
-//                   style: TextStyle(fontSize: 10),
-//                   textAlign: TextAlign.left,
-//                 ),
-//               ),
-//               // SizedBox(width: MediaQuery.of(context).size.height*0.5,),
-//               Expanded(
-//                 child: Text(
-//                   "0",
-//                   style: TextStyle(fontSize: 10),
-//                   textAlign: TextAlign.center,
-//                 ),
-//               ),
-//               // SizedBox(width: MediaQuery.of(context).size.height*0.5,),
-//               Expanded(
-//                 child: Text(
-//                   "100",
-//                   style: TextStyle(fontSize: 10),
-//                   textAlign: TextAlign.right,
-//                 ),
-//               ),
-
-//             ],
-//           ),
-//           Stack(
-//             children: [
-//               Container(
-//                 padding: EdgeInsets.symmetric(vertical: 20),
-//                 width: double.infinity,
-//                 height: 20,
-//                 decoration: BoxDecoration(
-//                   gradient: LinearGradient(
-//                     colors: [Colors.red, Colors.yellow, Colors.green],
-//                     stops: [0, 0.5, 1],
-//                     begin: Alignment.centerLeft,
-//                     end: Alignment.centerRight,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: MediaQuery.of(context).size.width *(widget.userMood.toDouble()+100)/200,
-//                 child: Container(
-//                   width: 2,
-//                   height: 20,
-//                   color: Colors.black,
-//                 ),
-//               ),
-//             ],
-//           )
-//         ]);
-//     }
-
-//     String getSourceImage(int mood){
-//     if (mood >90){
-//       return "assets/images/verryHappy.png";
-//     }
-//     if (mood >=0){
-//       return "assets/images/happy.png";
-//     }
-//     return 'assets/images/sad${(-mood/14).ceil()}.png';
-//   }
-// }
-
-    //       Container(
-    //   height: 180,
-    //   width: 100,
-    //   child:Row(
-    //       children:[
-    //         Column(
-    //           children: [
-    //             Text(widget.userMood.toString()),
-    //             Container(width:30,child:Text(widget.userMood.toString(),maxLines: 1,)),
-    //           ],),
-    //         RotatedBox(
-    //         quarterTurns: -1,
-    //         child:LinearProgressIndicator(value:widget.userMood.toDouble()),),
-    //       ],
-    //   ) 
-    // )
-
-
-//               Container(
-//   padding: EdgeInsets.symmetric(vertical: 20),
-//   width: double.infinity,
-//   height: 20,
-//   decoration: BoxDecoration(
-//     gradient: LinearGradient(
-//       colors: [Colors.red, Colors.yellow, Colors.green],
-//       stops: [0, 0.5, 1],
-//       begin: Alignment.centerLeft,
-//       end: Alignment.centerRight,
-//     ),
-//   ),
-//   child: LayoutBuilder(
-//     builder: (context, constraints) {
-//       double progress = 0.5; // Set the progress value between 0 and 1
-//       double indicatorPosition = progress * constraints.maxWidth;
-//       return Stack(
-//         children: [
-//           Container(
-//             width: indicatorPosition,
-//             height: double.infinity,
-//             color: Colors.black,
-//           ),
-//         ],
-//       );
-//     },
-//   ),
-// )
