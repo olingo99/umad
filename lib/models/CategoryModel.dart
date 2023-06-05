@@ -1,8 +1,3 @@
-import 'dart:convert';
-
-// Category categoryFromJson(String str) => Category.fromJson(json.decode(str));
-
-// String categoryToJson(Category data) => json.encode(data.toJson());
 
 /// Category model
 class Category {

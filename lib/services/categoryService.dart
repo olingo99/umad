@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import '../constanst.dart';
 import '../models/CategoryModel.dart';
 import '../httpServiceWrapper.dart';

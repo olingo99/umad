@@ -1,12 +1,3 @@
-// To parse this JSON data, do
-//
-//     final eventTemplate = eventTemplateFromJson(jsonString);
-
-import 'dart:convert';
-
-// EventTemplate eventTemplateFromJson(String str) => EventTemplate.fromJson(json.decode(str));
-
-// String eventTemplateToJson(EventTemplate data) => json.encode(data.toJson());
 
 
 //EventTemplate model

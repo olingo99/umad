@@ -1,12 +1,4 @@
-// To parse this JSON data, do
-//
-//     final friendsMap = friendsMapFromJson(jsonString);
 
-import 'dart:convert';
-
-// FriendsMap friendsMapFromJson(String str) => FriendsMap.fromJson(json.decode(str));
-
-// String friendsMapToJson(FriendsMap data) => json.encode(data.toJson());
 /// FriendsMap model
 class FriendsMap {
     int idfriendsMap;   //id of the friendsmap
