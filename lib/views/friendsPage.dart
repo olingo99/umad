@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import '../models/UserModel.dart';
-import '../services/userService.dart';
-import '../models/FriendsModel.dart';
 import '../services/friendService.dart';
 import '../widgets/UserViewer.dart';
 import '../widgets/EventWidgetClass.dart';
@@ -21,7 +17,7 @@ class _FriendsPageState extends State<FriendsPage> {
   final FriendsService friendsService = FriendsService();
 
   final navigatorKey = GlobalKey<NavigatorState>();
-  // final TextEditingController _controller = TextEditingController();
+
 
   refresh(){
     setState(() {});
