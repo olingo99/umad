@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'userPage.dart';
 import 'eventsPage.dart';
 import 'friendsPage.dart';
+import '../constanst.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;                               //Id of the user that is logged in
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,                 //Index of the selected page
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Constants().colorButton,
         onTap: _onItemTapped,                        //Change the selected page               
       ),
     );

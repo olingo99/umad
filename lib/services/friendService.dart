@@ -45,8 +45,6 @@ class FriendsService {
     );
 
     if (response.statusCode == 200) {
-      print('acceptFriendRequest');
-      print(response.body);
       return FriendsMap.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to accept friend request');
