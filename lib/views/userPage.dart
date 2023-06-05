@@ -6,7 +6,7 @@ import '../widgets/EventList.dart';
 
 
 class UserPage extends StatefulWidget {
-    final int userId;
+    final int userId;                               //The id of the user to display
     const UserPage({ Key? key,  required this.userId }) : super(key: key);
   
     @override

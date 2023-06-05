@@ -4,7 +4,7 @@ import 'eventsPage.dart';
 import 'friendsPage.dart';
 
 class HomePage extends StatefulWidget {
-  final int userId;
+  final int userId;                               //Id of the user that is logged in
   const HomePage({Key? key, required this.userId}): super(key: key);
 
   @override

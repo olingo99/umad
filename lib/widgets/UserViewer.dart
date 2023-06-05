@@ -104,17 +104,7 @@ class UserViewer extends StatelessWidget {
           ],)
         )
       );
-      // childrenWidget.add(futureEventViewer(friend));
-      // childrenWidget.add(Expanded(child: Padding(
-      //                     padding: const EdgeInsets.all(8.0),
-      //                     child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/seeEvents', arguments: friend.iduser);}, child: Text("See Events")),
-      //                     ))
-      //                   );
-      // childrenWidget.add(Expanded(child: Padding(
-      //                     padding: const EdgeInsets.all(8.0),
-      //                     child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/categorySelection', arguments: friend.iduser);}, child: Text("Add an event")),
-      //                     ))
-      //                   );
+
     }
     return SizedBox(
       height: 100,
@@ -123,14 +113,6 @@ class UserViewer extends StatelessWidget {
       ),
     );
   }
-
-  // Widget friendBuilder(){
-  //   return const Placeholder();
-  // }
-
-  // Widget requestBuilder(){
-  //   return const Placeholder();
-  // }
 
   Widget futureEventViewer(User friend) {
     return FutureBuilder<List<Event>>(
