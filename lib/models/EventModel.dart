@@ -8,15 +8,16 @@ import 'dart:convert';
 
 // String eventToJson(Event data) => json.encode(data.toJson());
 
+// Event model
 class Event {
-    int idevent;
-    String name;
-    int iduser;
-    int weight;
-    DateTime date;
-    int idcategory;
+    int idevent;  // id of event
+    String name;  // name of event
+    int iduser;   // id of user to which the event belongs
+    int weight;   // weight of event
+    DateTime date; // date of event
+    int idcategory; // id of category to which the event belongs
 
-    Event({
+    Event({      // constructor             
         required this.idevent,
         required this.name,
         required this.iduser,
@@ -25,7 +26,7 @@ class Event {
         required this.idcategory,
     });
 
-    factory Event.fromJson(Map<String, dynamic> json) => Event(
+    factory Event.fromJson(Map<String, dynamic> json) => Event(  // factory constructor to create an event from a json
         idevent: json["idevent"],
         name: json["Name"],
         iduser: json["iduser"],
@@ -35,7 +36,7 @@ class Event {
     );
 
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {  // method to convert an event to a json
         "idevent": idevent,
         "Name": name,
         "iduser": iduser,

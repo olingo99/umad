@@ -8,14 +8,16 @@ import 'dart:convert';
 
 // String eventTemplateToJson(EventTemplate data) => json.encode(data.toJson());
 
-class EventTemplate {
-    int ideventTemplate;
-    String name;
-    int iduser;
-    int proposedWeight;
-    int idcategory;
 
-    EventTemplate({
+//EventTemplate model
+class EventTemplate {  
+    int ideventTemplate;  //id of the event template
+    String name;          //name of the event template
+    int iduser;             //id of the user to which the event template belongs
+    int proposedWeight;     //proposed weight of the event template
+    int idcategory;         //id of the category to which the event template belongs
+
+    EventTemplate({         //constructor
         required this.ideventTemplate,
         required this.name,
         required this.iduser,
@@ -23,7 +25,7 @@ class EventTemplate {
         required this.idcategory,
     });
 
-    factory EventTemplate.fromJson(Map<String, dynamic> json) => EventTemplate(
+    factory EventTemplate.fromJson(Map<String, dynamic> json) => EventTemplate(   //factory constructor to create an event template from a json
         ideventTemplate: json["ideventTemplate"],
         name: json["Name"],
         iduser: json["iduser"],
@@ -31,7 +33,7 @@ class EventTemplate {
         idcategory: json["idcategory"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {                                        //method to convert an event template to a json
         "ideventTemplate": ideventTemplate,
         "Name": name,
         "iduser": iduser,

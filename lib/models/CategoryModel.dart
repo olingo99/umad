@@ -16,13 +16,13 @@ class Category {
         required this.iduser,
     });
 
-    factory Category.fromJson(Map<String, dynamic> json) => Category(
+    factory Category.fromJson(Map<String, dynamic> json) => Category(   //factory constructor to create a category from a json
         idcategory: json["idcategory"],
         name: json["Name"],
         iduser: json["iduser"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {                                  //method to convert a category to a json
         "idcategory": idcategory,
         "Name": name,
         "iduser": iduser,

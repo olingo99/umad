@@ -8,15 +8,16 @@ import 'dart:convert';
 
 // String userToJson(User data) => json.encode(data.toJson());
 
+///User model
 class User {
-    int iduser;
-    String name;
-    String passWord;
-    int mood;
-    bool admin;
+    int iduser;   //id of the user
+    String name;  //name of the user
+    String passWord;  //password of the user
+    int mood;    //mood of the user
+    bool admin;   //admin status of the user
 
 
-    User({
+    User({              //constructor
         required this.iduser,
         required this.name,
         required this.passWord,
@@ -25,7 +26,7 @@ class User {
 
     });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+    factory User.fromJson(Map<String, dynamic> json) => User(  //factory constructor to create a user from a json
         
         iduser: json["iduser"],
         name: json["Name"],
@@ -35,7 +36,7 @@ class User {
 
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {  //method to convert a user to a json
         "iduser": iduser,
         "Name": name,
         "passWord": passWord,
