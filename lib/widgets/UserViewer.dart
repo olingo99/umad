@@ -9,6 +9,7 @@ import '../models/EventModel.dart';
 import '../services/eventService.dart';
 import '../services/friendService.dart';
 import '../models/FriendsModel.dart';
+import '../getSourceImage.dart';
 
 class UserViewer extends StatelessWidget {
   UserViewer({super.key, required this.friend,required this.userId, required this.notifyParent, this.request = false});
@@ -130,15 +131,4 @@ class UserViewer extends StatelessWidget {
   //     },
   //   );
   // }
-
-
-  String getSourceImage(int mood){
-  if (mood >90){
-    return "assets/images/verryHappy.png";
-  }
-  if (mood >=0){
-    return "assets/images/happy.png";
-  }
-  return 'assets/images/sad${(-mood/14).ceil()}.png';
-  }
 }
