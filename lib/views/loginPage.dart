@@ -29,19 +29,22 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    usernameController.text = "postman";
-    passwordController.text = "123456";
+    usernameController.text = "postman";                      ///For testing purposes, fill the username and password fields with some values
+    passwordController.text = "123456";                       
     return Scaffold(
       appBar: AppBar(
         title: const Text('Umad?'),
-        backgroundColor: Constants().colorTopbar,
         centerTitle: true,
       ),
       body: _loginForm(),
     );
   }
 
-
+  /*
+  Form field for the username in the login page
+  can take any string as input
+  only check if the field is empty as validation
+  */
   Widget _usernameField(){
     return TextFormField(
                   controller: usernameController,
@@ -56,6 +59,11 @@ class _LoginPageState extends State<LoginPage> {
                 );
   }
 
+  /*
+  Form field for the password in the login page
+  can take any string as input
+  only check if the field is empty as validation
+  */
   Widget _passwordField(){
     return TextFormField(
                   controller: passwordController,
@@ -71,77 +79,94 @@ class _LoginPageState extends State<LoginPage> {
                 );
   }
 
-
+  /*
+  Buttton to submit the form and try to login
+  Triggers the validation chekcs on the form fields
+  If validation is OK, try to login with the username and password using the userService
+  */
   Widget __signinButton(){
     return ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                              final response = userService.tryLogin(usernameController.text, passwordController.text);
-                              response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser)))).catchError( (e) => {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Wrong username or password')),
-                                )
-                              });
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Please fill input')),
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Constants().colorButton,
-                          foregroundColor: Constants().colorText,
-                        ),
-                        child: const Text('Sign In'),
-                      );
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {                                                                                                              ///Form fields validation check
+            final response = userService.tryLogin(usernameController.text, passwordController.text);                                                          ///Try to login with the username and password                                
+            response.then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser)))).catchError( (e) => {    ///If login is OK, go to the home page
+              ScaffoldMessenger.of(context).showSnackBar(                                                                                                     ///If login is not OK, show a snackbar with an error message
+                const SnackBar(content: Text('Wrong username or password')),
+              )
+            });
+        } else {                                                                                                                                              ///If validation is not OK, show a snackbar with an error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please fill input')),
+          );
+        }
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Constants().colorButton,
+        foregroundColor: Constants().colorText,
+      ),
+      child: const Text('Sign In'),
+    );
   }
 
+  /*
+  Buttton to submit the form and try to register a new account
+  Triggers the validation chekcs on the form fields
+  If validation is OK, try to register a new account with the username and password using the userService
+  */
 
   Widget __signupButton(){
     return ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            try{
-                              userService.checkUserName(usernameController.text).then((value) => {
-                                if (value){
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Username already exist')),
-                                  )
-                                }
-                                else{
-                                  userService.addUser(usernameController.text, passwordController.text).then((value) => {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser)))
-                                  })
-                                }
-                              });
-                            }
-                            catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Wrong username or password')),
-                              );
-                            }
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Please fill input')),
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Constants().colorButton,
-                          foregroundColor: Constants().colorText,
-                        ),
-                        child: const Text('Sign up'),
-                      );
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {                                                                                ///Form fields validation check                             
+            userService.checkUserName(usernameController.text).then((value) {                                                   ///Check if the username is already taken
+              if (value){                                                                                                       ///If username is already taken, show a snackbar with an error message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Username already exist')),
+                );
+              }
+              else{                                                                                                             ///If username is not taken, try to register a new account with the username and password using the userService
+                userService.addUser(usernameController.text, passwordController.text).then((value) {                         
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId:value.iduser)));               ///If registration is OK, go to the home page
+                }).catchError((e){                                                                                               ///If an error occurs while trying to cregister the new account, show a snackbar with an error message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Something went wrong')),
+                  );
+                });
+              }
+            }).catchError((e){                                                                                                   ///If an error occurs while trying to check if username exists, show a snackbar with an error message
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Something went wrong')),
+            );
+            });
+
+        } else {                                                                                                                ///If validation is not OK, show a snackbar with an error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please fill input')),
+          );
+        }
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Constants().colorButton,
+        foregroundColor: Constants().colorText,
+      ),
+      child: const Text('Sign up'),
+    );
   }
 
+
+
+  /*
+  Build the login form widget, composed of 2 text input widgets and 2 buttons one to login and one to register
+  contains all the positiong of the widget
+  */
   Widget _loginForm(){
     return Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,                                                                                ///Center the widgets in the column
+            mainAxisAlignment: MainAxisAlignment.center,                                                                                  ///Center the widgets in the cross axis                   
             children: [
               Padding(
                 padding:
