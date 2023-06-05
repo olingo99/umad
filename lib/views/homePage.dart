@@ -12,64 +12,65 @@ class HomePage extends StatefulWidget {
       _HomePageState();
 }
 
-class _HomePageState
-    extends State<HomePage> {
-  int _selectedIndex = 0;
-  List<Widget> _widgetOptions = [];
+
+///Home page widget, holds the bottom navigation bar and the 3 pages that can be accessed from it
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;               //Index of the selected page            
+  List<Widget> _widgetOptions = [];     //List of the possible pages
   _HomePageState();
 
-    @override
-    void didChangeDependencies() {
-        super.didChangeDependencies();
+  @override
+  void didChangeDependencies() {
+      super.didChangeDependencies();
 
-  print(this.widget);
-  _widgetOptions = <Widget>[
+  _widgetOptions = <Widget>[            //Initialize the list of pages
     UserPage(userId: widget.userId),
     EventsPage(userId: widget.userId),
     FriendsPage(userId: widget.userId),
   ];
 }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
+  void _onItemTapped(int index) {      //Change the selected page
+    setState(() {                     //Set the state of the widget
+      _selectedIndex = index;         //Change the index of the selected page
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: widget.userId == 0 ? const Text('Home') : const Text('UMad?'),
+      appBar: AppBar(                   //App bar of the home page                
+        title: const Text('UMad?'),     //Title of the app
         centerTitle: true,
-        leading: widget.userId == 0 ? null : IconButton(
+        leading: IconButton(            //Logout button 
           icon: const Icon(Icons.logout),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context);     //Go back to the login page (This navigator only changes between the home page and the login page)
           },
         )
       ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions.elementAt(_selectedIndex),  //Show the selected page
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(           //Bottom navigation bar
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+          BottomNavigationBarItem(                        //Home page button     
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          BottomNavigationBarItem(                      //Events page button                
             icon: Icon(Icons.event),
             label: 'Events',
           ),
-          BottomNavigationBarItem(
+          BottomNavigationBarItem(                    //Friends page button             
             icon: Icon(Icons.person),
             label: 'Friends',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        onTap: _onItemTapped,                        //Change the selected page               
       ),
     );
   }
