@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../constanst.dart';
 import 'homePage.dart';
 import '../services/userService.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../httpServiceWrapper.dart';
 
@@ -21,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final storage = new FlutterSecureStorage();
   final _formKey = GlobalKey<FormState>();
   final httpServiceWrapper = HttpServiceWrapper();
   final UserService userService = UserService();
