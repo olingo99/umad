@@ -4,9 +4,9 @@
 
 import 'dart:convert';
 
-Event eventFromJson(String str) => Event.fromJson(json.decode(str));
+// Event eventFromJson(String str) => Event.fromJson(json.decode(str));
 
-String eventToJson(Event data) => json.encode(data.toJson());
+// String eventToJson(Event data) => json.encode(data.toJson());
 
 class Event {
     int idevent;

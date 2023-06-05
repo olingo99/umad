@@ -4,9 +4,9 @@
 
 import 'dart:convert';
 
-EventTemplate eventTemplateFromJson(String str) => EventTemplate.fromJson(json.decode(str));
+// EventTemplate eventTemplateFromJson(String str) => EventTemplate.fromJson(json.decode(str));
 
-String eventTemplateToJson(EventTemplate data) => json.encode(data.toJson());
+// String eventTemplateToJson(EventTemplate data) => json.encode(data.toJson());
 
 class EventTemplate {
     int ideventTemplate;

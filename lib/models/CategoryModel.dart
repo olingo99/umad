@@ -1,19 +1,16 @@
-// To parse this JSON data, do
-//
-//     final category = categoryFromJson(jsonString);
-
 import 'dart:convert';
 
-Category categoryFromJson(String str) => Category.fromJson(json.decode(str));
+// Category categoryFromJson(String str) => Category.fromJson(json.decode(str));
 
-String categoryToJson(Category data) => json.encode(data.toJson());
+// String categoryToJson(Category data) => json.encode(data.toJson());
 
+/// Category model
 class Category {
-    int idcategory;
-    String name;
-    int iduser;
+    int idcategory;   //id of the category
+    String name;      //name of the category
+    int iduser;       //id of the user to which the category belongs
 
-    Category({
+    Category({        //constructor     
         required this.idcategory,
         required this.name,
         required this.iduser,

@@ -4,9 +4,9 @@
 
 import 'dart:convert';
 
-FriendsMap friendsMapFromJson(String str) => FriendsMap.fromJson(json.decode(str));
+// FriendsMap friendsMapFromJson(String str) => FriendsMap.fromJson(json.decode(str));
 
-String friendsMapToJson(FriendsMap data) => json.encode(data.toJson());
+// String friendsMapToJson(FriendsMap data) => json.encode(data.toJson());
 
 class FriendsMap {
     int idfriendsMap;
