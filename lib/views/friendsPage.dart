@@ -62,7 +62,7 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
 
-  //Displayes a list of friends 
+  //Displayes a list of friends using the user viewer widget
   Widget _friendList(context){
     return FutureBuilder(
       future : friendsService.getFriends(widget.userId),
@@ -92,7 +92,7 @@ class _FriendsPageState extends State<FriendsPage> {
       );
   }
 
-  //Displayes a list of friend requests
+  //Displayes a list of friend requests using the user viewer widget
   Widget _friendRequestList(context){
     return FutureBuilder(
       future : friendsService.getFriendRequests(widget.userId),
