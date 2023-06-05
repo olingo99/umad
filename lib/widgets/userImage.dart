@@ -18,13 +18,16 @@ class _UserImageState extends State<UserImage> {
     // build the widget containing the image and the gauge
     @override
     Widget build(BuildContext context) {
+      
+      int colorScale = (255*(1-((widget.userMood+100)/200))).toInt();
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image.asset(                            //image of the user
             getSourceImage(widget.userMood),      //get the image corresponding to the mood
             semanticLabel: "User image",
-            width: 100,
+            // width: 100,
+            fit: BoxFit.fitWidth,
           ),
           SfLinearGauge(                        //gauge of the user's mood
             minimum: -100.0,                  //minimum value of the gauge
@@ -35,15 +38,7 @@ class _UserImageState extends State<UserImage> {
               LinearBarPointer( 
                 value: widget.userMood.toDouble(),
                 thickness: 20,
-                shaderCallback: (bounds) => const LinearGradient(   //color gradient of the gauge, TODO updated as to make the color gradient be static but to display only a part of it
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [
-                           Colors.redAccent,
-                          Colors.yellowAccent,
-                         
-                          Color(0xff00FF94),
-                        ]).createShader(bounds),
+                color: Color.fromARGB(255,colorScale, 1-colorScale, 0)
                   )
             ],
           )

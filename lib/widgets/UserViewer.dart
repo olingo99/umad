@@ -23,6 +23,7 @@ class UserViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int colorScale = (255*(1-((friend.mood.toDouble()+100)/200))).toInt();
     childrenWidget = [                                                                            //list of the children widgets that make up the user viewer      
           Semantics(
             label: 'Image of ${friend.name} with a curse level of ${(-friend.mood/14).ceil()}',   //semantic label of the image
@@ -50,15 +51,7 @@ class UserViewer extends StatelessWidget {
                     LinearBarPointer(
                       value: friend.mood.toDouble(),
                       thickness: 20,
-                      shaderCallback: (bounds) => const LinearGradient(                         //color gradient of the gauge, TODO updated as to make the color gradient be static but to display only a part of it
-                        begin: Alignment.topLeft,
-                        end: Alignment.topRight,
-                        colors: [
-                            Colors.redAccent,
-                          Colors.yellowAccent,
-                          
-                          Color(0xff00FF94),
-                        ]).createShader(bounds),
+                      color: Color.fromARGB(255,colorScale, 1-colorScale, 0),
                     )
               ],
             )
