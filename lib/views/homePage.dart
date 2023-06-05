@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
             label: 'Friends',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: _selectedIndex,                 //Index of the selected page
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,                        //Change the selected page               
       ),

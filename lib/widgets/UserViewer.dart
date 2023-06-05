@@ -95,7 +95,7 @@ class UserViewer extends StatelessWidget {
             // futureEventViewer(friend),
             Padding(
               padding: const EdgeInsets.all(2.0),
-              child: SizedBox(width:115,child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/seeEvents', arguments: friend.iduser);}, child: const Text("See Events"))),
+              child: SizedBox(width:115,child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/seeEvents', arguments: friend.iduser);}, child: const Text("See Events", ))),
             ),
             Padding(
               padding: const EdgeInsets.all(2.0),

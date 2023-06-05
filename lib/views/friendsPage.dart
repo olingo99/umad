@@ -13,6 +13,9 @@ class FriendsPage extends StatefulWidget {
   State<FriendsPage> createState() => _FriendsPageState();
 }
 
+
+
+///Friends page widget, shows the friends and friend requests, uses a navigator to change the content of the page
 class _FriendsPageState extends State<FriendsPage> {
   final FriendsService friendsService = FriendsService();
 
@@ -30,7 +33,7 @@ class _FriendsPageState extends State<FriendsPage> {
     final widgetBuilder = EventWidgets(context : context,args: {"refresh": refresh,  "navigatorKey": navigatorKey});      //widget builder, class that bundles all the widgets related to events, the class holds the navigator key and the refresh function so as to not pass them to every widget
 
     return WillPopScope(                                                                                                  //allows the back button to work, creates a scope for the navigator
-      onWillPop: () async => !await navigatorKey.currentState!.maybePop(),                                                //allows the back button to work and to pop only one page at a time
+      onWillPop: () async => !await navigatorKey.currentState!.maybePop(),                                                //allows the back button to work on the correct navigator
       child: Navigator(                                                                                                   //create a new navigator for the friend page, this navigator only changes the content of the page, so the app bar and bottom navigation bar stay the same
         key: navigatorKey,
         initialRoute: '/',
