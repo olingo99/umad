@@ -56,7 +56,10 @@ class _UserPageState extends State<UserPage> {
                             ),
                             child: Column(
                               children: [
-                                Title(color: Colors.white, child: const Text("Today's Events", style: TextStyle(fontSize: 25, color: Colors.white),)),  //Title of the widget
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Title(color: Colors.white, child: const Text("Today's Events", style: TextStyle(fontSize: 25, color: Colors.white),)),
+                                ),  //Title of the widget
                                 Expanded(child: EventList(userId: widget.userId, date: DateTime.now(), notifyParent: refresh, friendMode: false,)),                             //List of events widget, declared in EventList.dart
                               ],
                             ))

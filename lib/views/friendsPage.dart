@@ -124,13 +124,31 @@ class _FriendsPageState extends State<FriendsPage> {
 
   Widget mainFriendPage(context){                                                                 //widget building the main friend page, displays the friend list and friend request list + a button to add friends
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Expanded(
-          flex: 6,
-          child: _friendList(context),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Friend list", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         ),
         Expanded(
-          flex: 1,
+          flex: 5,
+          child: _friendList(context),
+        ),
+        // Container(
+        //   decoration: BoxDecoration(
+        //     border: Border.all(color: Colors.black),
+        //     borderRadius: BorderRadius.circular(10),
+        //   ),
+        //   child: Expanded(
+        //     flex: 1,
+        //     child: Padding(
+        //       padding: const EdgeInsets.all(8.0),
+        //       child: Text("Friend Requests", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        //     ),
+        //   ),
+        // ),
+        Expanded(
+          flex: 2,
           child: _friendRequestList(context),
         ),
         searchBar(userId: widget.userId,),                                                         //Widget containing the search bar to add friends, dispalyes a button, when pressed, opens a new widget to search for friends

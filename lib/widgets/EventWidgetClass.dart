@@ -120,7 +120,7 @@ class EventWidgets{
                     categoryService.addCategory(userId, categoryController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':value}));   //add the category and go to the addEvent page for this specific category
                   }
                 },
-                child: const Icon(Icons.add),
+                child: const Icon(Icons.add, semanticLabel: "add icon",),
               ),
           ),
         
@@ -280,7 +280,7 @@ class EventWidgets{
                         });
                       }
                     },
-                    child: const Center(child: Icon(Icons.add)),
+                    child: const Center(child: Icon(Icons.add, semanticLabel: "add icon",)),
                   ),
                 ),
               ],

@@ -37,7 +37,7 @@ class SearchBarDelegate extends SearchDelegate{   //class responsible for the se
   //Widget containing the clear button
   @override
   List<Widget> buildActions(BuildContext context) {
-    return [IconButton(icon:const Icon(Icons.clear), onPressed: () {
+    return [IconButton(icon:const Icon(Icons.clear, semanticLabel: "clear icon",), onPressed: () {
       query = ""; //clear the query
     })];
   }
@@ -45,7 +45,7 @@ class SearchBarDelegate extends SearchDelegate{   //class responsible for the se
   //Widget containing the back button
   @override
   Widget buildLeading(BuildContext context) {
-    return IconButton(icon: const Icon(Icons.arrow_back), onPressed: () {
+    return IconButton(icon: const Icon(Icons.arrow_back, semanticLabel: "arrow back icon",), onPressed: () {
       close(context, ""); //close the search bar and return an empty string
     });
   }

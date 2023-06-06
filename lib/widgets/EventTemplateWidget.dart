@@ -45,7 +45,7 @@ class EventTemplateWidget extends StatelessWidget {
           });
         }
       },
-      child: const Center(child: Icon(Icons.add)),
+      child: const Center(child: Icon(Icons.add, semanticLabel: "Add icon",)),
     );
   }
 

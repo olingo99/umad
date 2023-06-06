@@ -32,7 +32,7 @@ class UserViewer extends StatelessWidget {
               padding: const EdgeInsets.all(3.0), 
               child: Image.asset(                                                                 //image of the user
                 getSourceImage(friend.mood),                                                      //get the image corresponding to the mood
-                width: 100,
+                fit: BoxFit.fitWidth,
               ),
             ),
           ),
@@ -61,18 +61,26 @@ class UserViewer extends StatelessWidget {
     ];
 
     if (request){                                                                                        //if the widget is used to display a friend request
-      childrenWidget.add(Padding(                                                                        //add the accept and decline buttons
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(onPressed: (){                                                           //accept button
+      childrenWidget.add(
+        Expanded(
+          flex: 3,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center , 
+            children: [
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SizedBox(width:115,child: ElevatedButton(onPressed: (){                                                           //accept button
           friendsService.acceptFriendRequest(userId, friend.iduser).then((value) => notifyParent());    //send the "accept friend request" to the API and refresh the parent widget
           },
-           child:const  Text("Accept")  
-          ),
-      ));
-      childrenWidget.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(onPressed: (){friendsService.declineFriendRequest(userId, friend.iduser).then((value) => notifyParent());}, child:const Text("Decline")), //decline button, send the "decline friend request" to the API and refresh the parent widget
-      )); 
+           child:const  Text("Accept") )), //see events button, navigate to the events page with the id of the friend as argument
+            ),
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SizedBox(width:115, child: ElevatedButton(onPressed: (){friendsService.declineFriendRequest(userId, friend.iduser).then((value) => notifyParent());}, child:const Text("Decline"))),  //add an event button, navigate to the category selection page with the id of the friend as argument
+            ) ,        
+          ],)
+        )
+      );
     }
     else{                                                                                              //if the widget is used to display a friend
       childrenWidget.add(                                                                             //add the see events and add an event buttons

@@ -35,7 +35,10 @@ class _EventListState extends State<EventList> {
           return ListView.builder(
             itemCount: events.length,
             itemBuilder: (context, index) {
-              return EventViewer(event: events[index], notifyParent: refresh, friend: widget.friendMode,);  //Build the event viewer widget for each event
+              return Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: EventViewer(event: events[index], notifyParent: refresh, friend: widget.friendMode,),
+              );  //Build the event viewer widget for each event
             },
           );
         }

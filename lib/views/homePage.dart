@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('UMad?'),     //Title of the app
         centerTitle: true,
         leading: IconButton(            //Logout button 
-          icon: const Icon(Icons.logout),
+          icon: const Icon(Icons.logout, semanticLabel: "Logout icon",),
           onPressed: () {
             Navigator.pop(context);     //Go back to the login page (This navigator only changes between the home page and the login page)
           },
