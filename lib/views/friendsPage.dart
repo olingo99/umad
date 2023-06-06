@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umad/constanst.dart';
 import '../models/UserModel.dart';
 import '../services/friendService.dart';
 import '../widgets/UserViewer.dart';
@@ -86,7 +87,7 @@ class _FriendsPageState extends State<FriendsPage> {
         if(snapshot.hasError) {                                                                                                                                      //if there is an error, display a message, an empty friend lsit is considered as an error as it is returned as a 404 from the api
           return const Text("No friends yet!");                                                                                                                       
         }
-        return const CircularProgressIndicator();
+        return  CircularProgressIndicator(color: Constants().colorButton,);
         // return const Text("Loading");
       }
       );
@@ -116,7 +117,7 @@ class _FriendsPageState extends State<FriendsPage> {
         if(snapshot.hasError) {
           return const Text("no pending requests");
         }
-        return const CircularProgressIndicator();
+        return CircularProgressIndicator(color: Constants().colorButton,);
         // return const Text("Loading");
       }
       );

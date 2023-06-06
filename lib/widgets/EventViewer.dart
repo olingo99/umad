@@ -3,6 +3,7 @@ import '../models/EventModel.dart';
 import '../services/eventService.dart';
 import '../models/CategoryModel.dart';
 import '../services/categoryService.dart';
+import '../constanst.dart';
 
 class EventViewer extends StatelessWidget {
   final Event event;  //event to display
@@ -56,7 +57,7 @@ class EventViewer extends StatelessWidget {
         if(snapshot.hasError) {                                                              
           return Text("${snapshot.error}");                                              //display the error if there is one
         }
-        return const CircularProgressIndicator();                                      //display a loading indicator while waiting for the category to load
+        return  CircularProgressIndicator(color: Constants().colorButton,);                                     //display a loading indicator while waiting for the category to load
       }
     );
   }

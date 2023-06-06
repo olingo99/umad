@@ -3,6 +3,7 @@ import '../models/UserModel.dart';
 import '../services/userService.dart';
 import '../widgets/userImage.dart';
 import '../widgets/EventList.dart';
+import 'package:umad/constanst.dart';
 
 
 class UserPage extends StatefulWidget {
@@ -70,7 +71,7 @@ class _UserPageState extends State<UserPage> {
                 if(snapshot.hasError) {                                                   //If the future has an error, show the error
                     return Text('Error: ${snapshot.error}');
                 }
-                return const CircularProgressIndicator();                                 //while waiting for the future, show a loading indicator
+                return  CircularProgressIndicator(color: Constants().colorButton,);                                //while waiting for the future, show a loading indicator
             }
         );
     }

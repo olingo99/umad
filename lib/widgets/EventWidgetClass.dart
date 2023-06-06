@@ -7,6 +7,7 @@ import '../services/eventTemplateService.dart';
 import '../widgets/EventTemplateWidget.dart';
 import 'package:flutter/services.dart';
 import '../services/eventService.dart';
+import '../constanst.dart';
 
 
 // class that bundles all the widget for event creattion together to make it easier to make them interact with the same naivgatorKey and refresh function
@@ -87,7 +88,7 @@ class EventWidgets{
             ],
           );
         }
-        return const CircularProgressIndicator();
+        return  CircularProgressIndicator(color: Constants().colorButton,);
       }
     );
   }
@@ -207,7 +208,7 @@ class EventWidgets{
         if(snapshot.hasError) {                                                                                    //if the future returns an error just display the form to create a new event
           return newEventWidget(context,userId, category);                                                 
         }
-        return const CircularProgressIndicator();                                                               //if the future is not completed yet, display a circular progress indicator
+        return  CircularProgressIndicator(color: Constants().colorButton,);                                                               //if the future is not completed yet, display a circular progress indicator
       }
       );
   }

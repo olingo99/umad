@@ -45,7 +45,7 @@ class _EventListState extends State<EventList> {
         if(snapshot.hasError) {
           return Text("${snapshot.error}");                              //If the future is rejected, show the error
         }
-        return const CircularProgressIndicator();                 //While waiting for the future to resolve, show a loading indicator
+        return  CircularProgressIndicator(color: Constants().colorButton,);                //While waiting for the future to resolve, show a loading indicator
       }
     );
   }
