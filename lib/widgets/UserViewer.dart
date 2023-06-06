@@ -65,18 +65,18 @@ class UserViewer extends StatelessWidget {
         Expanded(
           flex: 3,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center , 
+            mainAxisAlignment: MainAxisAlignment.center ,
             children: [
             Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: const EdgeInsets.fromLTRB(2, 0, 2, 2),
               child: SizedBox(width:115,child: ElevatedButton(onPressed: (){                                                           //accept button
           friendsService.acceptFriendRequest(userId, friend.iduser).then((value) => notifyParent());    //send the "accept friend request" to the API and refresh the parent widget
           },
-           child:const  Text("Accept") )), //see events button, navigate to the events page with the id of the friend as argument
+           child:const  Text("Accept") )),
             ),
             Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: SizedBox(width:115, child: ElevatedButton(onPressed: (){friendsService.declineFriendRequest(userId, friend.iduser).then((value) => notifyParent());}, child:const Text("Decline"))),  //add an event button, navigate to the category selection page with the id of the friend as argument
+              padding: const EdgeInsets.fromLTRB(2, 0, 2, 2),
+              child: SizedBox(width:115, child: ElevatedButton(onPressed: (){friendsService.declineFriendRequest(userId, friend.iduser).then((value) => notifyParent());}, child:const Text("Decline"))),  //decline button, send the "decline friend request" to the API and refresh the parent widget
             ) ,        
           ],)
         )
@@ -90,11 +90,11 @@ class UserViewer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center , 
             children: [
             Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: const EdgeInsets.fromLTRB(2, 0, 2, 2),
               child: SizedBox(width:115,child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/seeEvents', arguments: friend.iduser);}, child: const Text("See Events", ))), //see events button, navigate to the events page with the id of the friend as argument
             ),
             Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: const EdgeInsets.fromLTRB(2, 0, 2, 2),
               child: SizedBox(width:115, child: ElevatedButton(onPressed: (){Navigator.of(context).pushNamed('/categorySelection', arguments: friend.iduser);}, child: const Text("Add an event"))),  //add an event button, navigate to the category selection page with the id of the friend as argument
             ) ,        
           ],)
