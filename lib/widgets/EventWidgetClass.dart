@@ -55,26 +55,33 @@ class EventWidgets{
           List<Category> categories = snapshot.data ?? [];
           return Column(                                    //in a collumn, display the list of categories and the form to create a new one
             children: [
+              const Padding(padding: EdgeInsets.all(8),child: Text("Select a category", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))), //title
               Expanded(
                 flex: 3,
                 child: 
-                ListView.separated(                       //list of categories, separated by a divider
-                  itemBuilder:(context, index) {
-                    return ListTile(
-                      title: Text(categories[index].name),
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':categories[index]});  //when the user tap on a category, go to the addEvent page for this specific category
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) => const Divider(      //divider between categories
-                    color: Colors.black,
+                Container(
+                  decoration:  BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  itemCount: categories.length)
+                  child: ListView.separated(                       //list of categories, separated by a divider
+                    itemBuilder:(context, index) {
+                      return ListTile(
+                        title: Text(categories[index].name),
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':categories[index]});  //when the user tap on a category, go to the addEvent page for this specific category
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) => const Divider(      //divider between categories
+                      color: Colors.black,
+                    ),
+                    itemCount: categories.length),
+                )
               ),
                 Expanded(
                   flex:1,
-                  child: newCategoryWidget(userId, context),                //Widget containing a form to create a new category
+                  child: Container(decoration:  BoxDecoration(border: Border.all(color: Colors.black),borderRadius: BorderRadius.circular(10),), child: newCategoryWidget(userId, context)),                //Widget containing a form to create a new category
                 )
                 ],
           );
@@ -97,34 +104,42 @@ class EventWidgets{
   Widget newCategoryWidget(int userId, BuildContext context){
     return  Form(
       key:_formKeyCategory,
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            flex:3,
-            child: TextFormField(                                                               //TextField for the name of the new category
-              controller: categoryController,
-              decoration: const InputDecoration(
-              border: OutlineInputBorder(), labelText: "New category"),
-              validator: (value){
-                if(value == null || value.isEmpty){                                             //if the user didn't enter a name, return an error message
-                  return 'Please enter a category name';
-                }
-                return null;
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(                                                             //Button to submit the new category
-                onPressed: () {
-                  if (_formKeyCategory.currentState!.validate()) {                           //if the form is valid
-                    categoryService.addCategory(userId, categoryController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':value}));   //add the category and go to the addEvent page for this specific category
-                  }
-                },
-                child: const Icon(Icons.add, semanticLabel: "add icon",),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Create a new category", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ), //title
+          Row(
+            children: [
+              Expanded(
+                flex:3,
+                child: TextFormField(                                                               //TextField for the name of the new category
+                  controller: categoryController,
+                  decoration: const InputDecoration(
+                  border: OutlineInputBorder(), labelText: "New category"),
+                  validator: (value){
+                    if(value == null || value.isEmpty){                                             //if the user didn't enter a name, return an error message
+                      return 'Please enter a category name';
+                    }
+                    return null;
+                  },
+                ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(                                                             //Button to submit the new category
+                    onPressed: () {
+                      if (_formKeyCategory.currentState!.validate()) {                           //if the form is valid
+                        categoryService.addCategory(userId, categoryController.text).then((value) => Navigator.of(context).pushNamed('/addEvent', arguments: {'userId':userId,'category':value}));   //add the category and go to the addEvent page for this specific category
+                      }
+                    },
+                    child: const Icon(Icons.add, semanticLabel: "add icon",),
+                  ),
+              ),
+            
+            ],
           ),
-        
         ],
       )
     );
